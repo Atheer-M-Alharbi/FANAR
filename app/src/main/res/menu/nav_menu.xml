@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/nav_home"
+        android:title="Home"
+        android:icon="@drawable/home"
+        app:cnb_backgroundColor="#37FF9800"
+        app:cnb_iconColor="@color/main"
+        app:cnb_textColor="@color/main"
+        />
+
+
+    <item
+        android:id="@+id/nav_plan"
+        android:title="Plan"
+        android:icon="@drawable/file"
+        app:cnb_backgroundColor="#37FF9800"
+        app:cnb_iconColor="@color/main"
+        app:cnb_textColor="@color/main"
+        />
+
+
+    <item
+        android:id="@+id/nav_com"
+        android:title="Community"
+        android:icon="@drawable/group_chat"
+        app:cnb_backgroundColor="#37FF9800"
+        app:cnb_iconColor="@color/main"
+        app:cnb_textColor="@color/main"
+        />
+
+    <item
+        android:id="@+id/nav_chatBot"
+        android:title="Help"
+        android:icon="@drawable/robot"
+        app:cnb_backgroundColor="#37FF9800"
+        app:cnb_iconColor="@color/main"
+        app:cnb_textColor="@color/main"
+        />
+</menu>

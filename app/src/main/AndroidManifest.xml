@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.fanarver3">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FANARver3">
+        <activity android:name=".TABMainPages.Parent_cummunity"></activity>
+        <activity android:name=".TABMainPages.Parent_chatBot" />
+        <activity android:name=".TABMainPages.Parent_PlanResourse" />
+        <activity android:name=".TABMainPages.Parent_PlanContent" />
+        <activity android:name=".TABMainPages.parent_Plan" />
+        <activity android:name=".SPscreen.SP_ViewPlanContent_Resource" />
+        <activity android:name=".SPscreen.SP_ViewPlanContent_days" />
+        <activity android:name=".SPscreen.sp_View_plan" />
+        <activity android:name=".SPscreen.sp_CommunityScreen" />
+        <activity android:name=".SPscreen.SPhomeScreen" />
+        <activity android:name=".TABMainPages.EvaluatePlan" />
+        <activity android:name=".TABMainPages.User_Profile" />
+        <activity android:name=".SignIn" />
+        <activity android:name=".LogIn" />
+        <activity android:name=".TABMainPages.HomeScreen" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>

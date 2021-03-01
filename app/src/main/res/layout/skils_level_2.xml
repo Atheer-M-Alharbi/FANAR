@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".TABMainPages.parent_Plan"
+android:background="@color/white"
+android:orientation="vertical"
+android:layout_gravity="center_horizontal"
+android:id="@+id/skills_level_2">
+
+
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#E85A8A"
+    android:elevation="4dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:titleTextColor="@color/white"
+    app:title="Plan"
+    />
+
+<com.ismaeldivita.chipnavigation.ChipNavigationBar
+    android:id="@+id/menu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="@drawable/menu_cornors"
+    app:cnb_menuResource="@menu/nav_menu"
+    app:cnb_orientationMode="horizontal"
+    app:cnb_unselectedColor="#9E9898"
+    android:elevation="1dp"
+    />
+
+<CheckBox
+    android:id="@+id/ex1"
+    android:layout_width="342dp"
+    android:layout_height="63dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginStart="34dp"
+    android:layout_marginTop="134dp"
+    android:text="CheckBox"
+    android:textColorHighlight="@color/main"/>
+
+<CheckBox
+    android:id="@+id/ex2"
+    android:layout_width="342dp"
+    android:layout_height="63dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginStart="33dp"
+    android:layout_marginTop="213dp"
+    android:text="CheckBox"
+    android:textColorHighlight="@color/main"/>
+
+<CheckBox
+    android:id="@+id/ex3"
+    android:layout_width="342dp"
+    android:layout_height="63dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginStart="33dp"
+    android:layout_marginTop="302dp"
+    android:text="CheckBox"
+    android:textColorHighlight="@color/main"/>
+
+<CheckBox
+    android:id="@+id/ex4"
+    android:layout_width="342dp"
+    android:layout_height="63dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true"
+    android:layout_marginStart="35dp"
+    android:layout_marginTop="382dp"
+    android:textColorHighlight="@color/main"
+    android:text="CheckBox" />
+
+<TextView
+    android:id="@+id/textView6"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_marginStart="34dp"
+    android:layout_marginTop="82dp"
+    android:text="Please select the skills that your child don't have it"
+    app:layout_constraintStart_toStartOf="parent"
+    android:textSize="18dp"
+    android:textColor="@color/main"
+    android:textStyle="bold"/>
+
+
+</RelativeLayout>
