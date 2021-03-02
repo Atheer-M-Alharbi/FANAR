@@ -74,6 +74,27 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="390dp"
+                    android:layout_height="wrap_content"
+
+                    android:hint="Your child name"
+                    android:textColorHint="#616160"
+                    app:boxStrokeColor="#BCBAB8"
+                    android:paddingStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                     android:gravity="center">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/childName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:paddingStart="20dp"
+                        />
+                    //android:inputType="text" so new line is turns off
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 // dropdown menu for plan information
 

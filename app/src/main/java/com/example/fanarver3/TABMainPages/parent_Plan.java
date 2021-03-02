@@ -14,6 +14,7 @@ import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 import com.example.fanarver3.R;
 import com.example.fanarver3.Plan;
+import com.google.android.material.textfield.TextInputLayout;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class parent_Plan extends AppCompatActivity{
     android.widget.AutoCompleteTextView ageSelected;
     android.widget.AutoCompleteTextView IQLevelSelected;
     android.widget.AutoCompleteTextView PerceptionSelected;
+    TextInputLayout child_Name;
 
     ArrayList selrctedSkills;
 
@@ -37,7 +39,7 @@ public class parent_Plan extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent__plan);
 
-        // get menu id & make homescreen selected
+        // get menu id & make homescreen selecteds
         chipNavigationBar = findViewById(R.id.menu);
         chipNavigationBar.setItemSelected(R.id.nav_plan,true);
         bottonMenu();
@@ -60,7 +62,7 @@ public class parent_Plan extends AppCompatActivity{
         fillAGE(this);
         fillIQLEVEL(this);
         fillPERCEPTION(this);
-
+        child_Name = findViewById(R.id.childName);
         // 1. start python
         if (! Python.isStarted()) {
             Python.start(new AndroidPlatform(this));
@@ -75,9 +77,9 @@ public class parent_Plan extends AppCompatActivity{
                 if((!AutismLevelSelected.getText().equals(" "))&&(!ageSelected.getText().equals(" "))&&(!IQLevelSelected.getText().equals(" "))&&(!PerceptionSelected.getText().equals(" "))){
                     //2. send required factor to the model
 
-
-                    //int planLevel = new Plan(AutismLevelSelected.getText().toString(),ageSelected.getText().toString(),IQLevelSelected.getText().toString(),PerceptionSelected.getText().toString(),         );
-                   /* switch (planLevel){
+                 Plan planLevel = new Plan(child_Name.getEditText().toString());
+                 int thePlanLevel=  planLevel.GenerateDelvlopmentPlan(AutismLevelSelected.getText().toString(),ageSelected.getText().toString(),IQLevelSelected.getText().toString(),PerceptionSelected.getText().toString());
+                 switch (thePlanLevel){
                         case 0:
                             setContentView(R.layout.skils_level_1);
                             break;
@@ -91,8 +93,7 @@ public class parent_Plan extends AppCompatActivity{
                             setContentView(R.layout.skils_level_4);
                             break;
 
-                      }
-                    */
+                 }
                     // selrctedSkills.add();
 
                 }

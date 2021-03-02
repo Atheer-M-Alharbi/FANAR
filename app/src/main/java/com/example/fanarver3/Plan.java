@@ -18,7 +18,7 @@ public class Plan {
 
 
     // var's for child info
-    public boolean approved;
+    public boolean PlanState;
     public int childID;
     public String childName;
     public int AutsmLevel;
@@ -31,27 +31,26 @@ public class Plan {
     public ArrayList SelectedSkillsList;
 
 
-    public Plan (String childName,int AutsmLevel, int IqLevel, int Perception ,int age ,ArrayList SelectedSkillsList ) {
-        approved = false;
+    public Plan (String child_Name) {
+        PlanState = false;
         childID +=childID;
-        //SelectedSkillsList;
-        //ResourcesList;
+        childName = child_Name;
 
-
-       // GenerateDelvlopmentPlan(AutsmLevel, age, IqLevel, Perception);
      }
+
+    public Plan (ArrayList SelectedSkillsList) {
+         fetchResources(SelectedSkillsList);
+    }
 
 
     //return ***int***
-    public void GenerateDelvlopmentPlan(String AutsmLevelSelected, String AgeSelected, String IqLevelSelected, String PerceptionSelected) {
-
+    public int GenerateDelvlopmentPlan(String AutsmLevelSelected, String AgeSelected, String IqLevelSelected, String PerceptionSelected) {
 
         if (AutsmLevelSelected.equalsIgnoreCase("High function")) {
             AutsmLevel = 1;
         }
         IqLevel = Integer.parseInt(IqLevelSelected);
         age = Integer.parseInt(AgeSelected);
-
         switch (PerceptionSelected) {
             case "Low":
                 Perception = 1;
@@ -64,17 +63,16 @@ public class Plan {
                 break;
         }
 
-
         // link the model to get result for the plan
         Python mypython = Python.getInstance();
-        PyObject pyobject = mypython.getModule("kjdsnkjdn.py"); // need to add the name of the model file
-        //PyObject obj = pyobject.callAttr( main , AutsmLevel, IqLevel, age, Perception);
+        PyObject pyobject = mypython.getModule("FANAR_Model.py"); // need to add the name of the model file
+        PyObject obj = pyobject.callAttr( "main" , AutsmLevel, IqLevel, age, Perception);
 
-       // returen obj.toString();
+        return Integer.parseInt(obj.toString());
 
-    };
+    }
 
-    public void fetchResources(){
+    public void fetchResources(ArrayList SelectedSkillsList ){
 
         //var's for database connection
           Connection CONNECTION  = null;
@@ -133,13 +131,13 @@ public class Plan {
             // show textbox show error
         }
 
-    };
+    }
 
 
     public void GenerateDelvlopmentPlan(){
 
         //adjust plan
 
-    };
+    }
 
     }
