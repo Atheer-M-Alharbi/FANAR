@@ -8,6 +8,16 @@ android {
 
     defaultConfig {
         applicationId "com.example.fanarver3"
+
+        python{
+            pip {
+                install "sklearn"
+                install "scikit-learn"
+                install "pandas"
+            }
+
+        }
+
         sourceSets{
             main{
                 python{
@@ -16,7 +26,7 @@ android {
                 }
             }
         }
-        minSdkVersion 25
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -28,7 +38,7 @@ android {
         }
 
         python{
-            buildPython "C:/Python380/python.exe"
+            buildPython "C:/Python38/python"
 
         }
 

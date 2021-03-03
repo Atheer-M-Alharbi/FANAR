@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
@@ -33,6 +35,7 @@ public class parent_Plan extends AppCompatActivity{
     ArrayList selrctedSkills;
 
     ImageView UserProfile;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,27 +82,35 @@ public class parent_Plan extends AppCompatActivity{
 
                  Plan planLevel = new Plan(child_Name.getEditText().toString());
                  int thePlanLevel=  planLevel.GenerateDelvlopmentPlan(AutismLevelSelected.getText().toString(),ageSelected.getText().toString(),IQLevelSelected.getText().toString(),PerceptionSelected.getText().toString());
+
+                 // week1 = findViewById(R.id.week1);
+                 // week1.setText(thePlanLevel);
+
                  switch (thePlanLevel){
                         case 0:
+                          //  Intent intent = new Intent(parent_Plan.this, skills_level_1.class);
+                            //startActivity(intent);
                             setContentView(R.layout.skils_level_1);
+                            getSelectedLevel(planLevel);
                             break;
                         case 1:
                             setContentView(R.layout.skils_level_2);
                             break;
                         case 2:
+                            Intent intent = new Intent(parent_Plan.this, Parent_PlanContent.class);
+                            startActivity(intent);
                             setContentView(R.layout.skils_level_3);
                             break;
                         case 3:
                             setContentView(R.layout.skils_level_4);
                             break;
 
+
                  }
                     // selrctedSkills.add();
 
                 }
 
-                Intent intent = new Intent(parent_Plan.this, Parent_PlanContent.class);
-                startActivity(intent);
             }
         });
     }
@@ -128,6 +139,36 @@ public class parent_Plan extends AppCompatActivity{
             }
         } );
     }
+
+    public void getSelectedLevel(Plan planLevel){
+
+        CheckBox skill1 = findViewById(R.id.ex1);
+        CheckBox skill2 = findViewById(R.id.ex2);
+        CheckBox skill3 = findViewById(R.id.ex3);
+        CheckBox skill4 = findViewById(R.id.ex4);
+        CheckBox skill5 = findViewById(R.id.ex5);
+
+
+        if (skill1.isSelected()){
+            selrctedSkills.add(skill1.getId());
+        }
+        if (skill2.isSelected()){
+            selrctedSkills.add(skill2.getId());
+        }
+        if (skill3.isSelected()){
+            selrctedSkills.add(skill3.getId());
+        }
+        if (skill4.isSelected()){
+            selrctedSkills.add(skill4.getId());
+        }
+        if (skill5.isSelected()){
+            selrctedSkills.add(skill5.getId());
+        }
+
+        planLevel.fetchResources(selrctedSkills);
+
+
+    };
 
     public void fillAUTSIMLEVEL(parent_Plan view){
 

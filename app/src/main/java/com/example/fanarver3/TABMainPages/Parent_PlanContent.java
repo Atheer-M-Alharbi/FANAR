@@ -12,6 +12,10 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 public class Parent_PlanContent extends AppCompatActivity {
 
     ChipNavigationBar chipNavigationBar;
+    android.widget.Button day1;
+    android.widget.Button day2;
+    android.widget.Button day3;
+    android.widget.Button day4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,13 @@ public class Parent_PlanContent extends AppCompatActivity {
         chipNavigationBar = findViewById(R.id.menu);
         chipNavigationBar.setItemSelected(R.id.nav_plan,true);
         bottonMenu();
+
+        day1.findViewById(R.id.PlanDay1);
+        day2.findViewById(R.id.PlanDay2);
+        day3.findViewById(R.id.PlanDay3);
+        day4.findViewById(R.id.PlanDay4);
+
+
 
 
 

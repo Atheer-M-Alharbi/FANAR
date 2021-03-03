@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FANARver3">
-        <activity android:name=".TABMainPages.Parent_cummunity"></activity>
+        <activity android:name=".TABMainPages.Parent_cummunity" />
         <activity android:name=".TABMainPages.Parent_chatBot" />
         <activity android:name=".TABMainPages.Parent_PlanResourse" />
         <activity android:name=".TABMainPages.Parent_PlanContent" />

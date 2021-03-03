@@ -75,22 +75,25 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="390dp"
+                    android:layout_width="360dp"
                     android:layout_height="wrap_content"
-
+                    android:id="@+id/childName"
                     android:hint="Your child name"
-                    android:textColorHint="#616160"
+                    android:textColorHint="#2B2B2B"
                     app:boxStrokeColor="#BCBAB8"
+                    app:hintTextColor="#D2FF9800"
                     android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                      android:gravity="center">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/childName"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
                         android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
                         />
                     //android:inputType="text" so new line is turns off
 
@@ -142,6 +145,7 @@
                         android:layout_height="wrap_content"
                         android:enabled="false"
                         android:inputType="none"
+                        android:hint="Age"
                         android:textColor="@color/black" />
                 </com.google.android.material.textfield.TextInputLayout>
 

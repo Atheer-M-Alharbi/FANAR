@@ -18,6 +18,7 @@ public class Plan {
 
 
     // var's for child info
+    public int Planlevel;
     public boolean PlanState;
     public int childID;
     public String childName;
@@ -65,15 +66,18 @@ public class Plan {
 
         // link the model to get result for the plan
         Python mypython = Python.getInstance();
-        PyObject pyobject = mypython.getModule("FANAR_Model.py"); // need to add the name of the model file
+        final PyObject pyobject = mypython.getModule("M"); // need to add the name of the model file
         PyObject obj = pyobject.callAttr( "main" , AutsmLevel, IqLevel, age, Perception);
+
+        Planlevel = Integer.parseInt(obj.toString());
 
         return Integer.parseInt(obj.toString());
 
     }
 
-    public void fetchResources(ArrayList SelectedSkillsList ){
+    public void fetchResources(ArrayList SelectedSkills ){
 
+          this.SelectedSkillsList = SelectedSkills;
         //var's for database connection
           Connection CONNECTION  = null;
           String ip = "192.168.1.21";
@@ -103,18 +107,15 @@ public class Plan {
 
                     ResultSet resultSet_skills;
 
-                    // arraycontain the skills id  => SelectedSkillsList[0]
+                    // array contain the skills id  => SelectedSkillsList[0]
                     for (int i =0; i<=SelectedSkillsList.size();i++) {
                         //while through the array & fetch each resourse id and save it into another array
-                        resultSet_skills = statement.executeQuery("Select Exercise from Resources where ExerciseID =" + SelectedSkillsList.get(i) + ";");
-                        // level + let the frame return ids of the selected skills
-                        // + make 2 array one contain the skills id & another that contain the
-                        // resourse after fetch it from database
+                        resultSet_skills = statement.executeQuery("Select Exercise from Resources where ExerciseID =" + SelectedSkillsList.get(i) + " AND DifficultyLevel ="+this.Planlevel+";");
 
-                        if (resultSet_skills != null)
+                         if (resultSet_skills != null)
                             ResourcesList.add(resultSet_skills.toString());
 
-                        //end of the while loop
+                        //end of the for loop
                     }
 
                     //end of second try
@@ -130,6 +131,8 @@ public class Plan {
             test = "error!!!!";
             // show textbox show error
         }
+
+
 
     }
 

@@ -1,5 +1,7 @@
 package com.example.fanarver3;
 
+import java.net.URL;
+
 public class Parent {
 
     Plan plan;
@@ -11,7 +13,12 @@ public class Parent {
     }
 
 
-    //public static Plan ViewPlan(){  //adjust plan };
+    public static void ViewPlan(URL url){
+
+
+
+
+    };
 
 
 

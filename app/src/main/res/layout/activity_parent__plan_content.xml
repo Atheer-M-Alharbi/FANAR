@@ -24,18 +24,7 @@
             android:src="@drawable/profil"
             />
 
-        <TextView
-            android:id="@+id/week1"
-            android:layout_width="286dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="20dp"
-            android:text="Week 1"
-            android:textColor="@color/secmain"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:transitionName="text" />
+
 
 
         <ScrollView
@@ -47,6 +36,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/week1"
+                    android:layout_width="286dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="Week 1"
+                    android:textColor="@color/secmain"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:transitionName="text" />
 
 
                 <android.widget.Button
