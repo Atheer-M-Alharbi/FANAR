@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.fanarver3.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+import com.example.fanarver3.Plan;
+import com.example.fanarver3.Parent;
 
 public class Parent_PlanContent extends AppCompatActivity {
 
@@ -32,9 +35,44 @@ public class Parent_PlanContent extends AppCompatActivity {
         day3.findViewById(R.id.PlanDay3);
         day4.findViewById(R.id.PlanDay4);
 
+        // i need plan...
+        //
 
+        day1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Parent_PlanContent.this, Parent_PlanResourse.class);
 
+                startActivity(intent);
+            }
+        });
 
+        day2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Parent_PlanContent.this, Parent_PlanResourse.class);
+                startActivity(intent);
+            }
+        });
+
+        day3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Parent_PlanContent.this, Parent_PlanResourse.class);
+                startActivity(intent);
+            }
+        });
+
+        day4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Parent_PlanContent.this, Parent_PlanResourse.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

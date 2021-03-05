@@ -71,6 +71,7 @@ public class parent_Plan extends AppCompatActivity{
             Python.start(new AndroidPlatform(this));
         }
 
+
         //create bottom - move to plan content fragment
         createPlan = findViewById(R.id.createPlanBottom);
         createPlan.setOnClickListener(new View.OnClickListener() {
@@ -95,24 +96,28 @@ public class parent_Plan extends AppCompatActivity{
                             break;
                         case 1:
                             setContentView(R.layout.skils_level_2);
+                            getSelectedLevel(planLevel);
                             break;
                         case 2:
-                            Intent intent = new Intent(parent_Plan.this, Parent_PlanContent.class);
-                            startActivity(intent);
                             setContentView(R.layout.skils_level_3);
+                            getSelectedLevel(planLevel);
                             break;
                         case 3:
                             setContentView(R.layout.skils_level_4);
+                            getSelectedLevel(planLevel);
                             break;
+                  }
 
 
-                 }
-                    // selrctedSkills.add();
 
                 }
 
             }
         });
+
+        //view
+
+
     }
 
 

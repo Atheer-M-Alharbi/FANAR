@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.fanarver3.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+
+import java.net.URL;
 
 public class Parent_PlanResourse extends AppCompatActivity {
 
@@ -23,7 +26,17 @@ public class Parent_PlanResourse extends AppCompatActivity {
         chipNavigationBar.setItemSelected(R.id.nav_plan,true);
         bottonMenu();
 
+
     }
+
+    public void ViewResources(String Resourceurl){
+
+        Uri url = Uri.parse(Resourceurl);
+        Intent openWebpage = new Intent(Intent.ACTION_VIEW, url );
+        startActivity(openWebpage);
+
+    };
+
 
     private void bottonMenu() {
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
