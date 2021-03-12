@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Specialist {
 
-    public ArrayList PlanList;
+    // this must be saved in database ****
+    public static ArrayList PlanList;
 
 
     public Specialist() {
@@ -12,17 +13,13 @@ public class Specialist {
 
     }
 
-    public static String giveApprovalOnPlan(Plan plan){
+    public boolean AddToSPlist(Plan plan) {
 
-        String IsApproved = null;
+        PlanList.add(plan);
+        return true;
+    }
 
-
-
-        //may adjust plan
-
-        return IsApproved;
-
-    };
+    ;
 
 
 }

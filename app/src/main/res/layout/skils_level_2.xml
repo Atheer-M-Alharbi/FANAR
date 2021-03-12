@@ -39,53 +39,67 @@ android:id="@+id/skills_level_2">
     android:elevation="1dp"
     />
 
-<CheckBox
-    android:id="@+id/ex1"
-    android:layout_width="342dp"
-    android:layout_height="63dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginStart="34dp"
-    android:layout_marginTop="134dp"
-    android:text="CheckBox"
-    android:textColorHighlight="@color/main"/>
+    <CheckBox
+        android:id="@+id/ex1"
+        android:layout_width="342dp"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="134dp"
+        android:text="skills 1"
+        android:textColorHighlight="@color/main"
+        />
 
-<CheckBox
-    android:id="@+id/ex2"
-    android:layout_width="342dp"
-    android:layout_height="63dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginStart="33dp"
-    android:layout_marginTop="213dp"
-    android:text="CheckBox"
-    android:textColorHighlight="@color/main"/>
+    <CheckBox
+        android:id="@+id/ex2"
+        android:layout_width="342dp"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="213dp"
+        android:text="skills 2"
+        android:textColorHighlight="@color/main"/>
 
-<CheckBox
-    android:id="@+id/ex3"
-    android:layout_width="342dp"
-    android:layout_height="63dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginStart="33dp"
-    android:layout_marginTop="302dp"
-    android:text="CheckBox"
-    android:textColorHighlight="@color/main"/>
+    <CheckBox
+        android:id="@+id/ex3"
+        android:layout_width="342dp"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="33dp"
+        android:layout_marginTop="302dp"
+        android:text="skills 3"
+        android:textColorHighlight="@color/main"/>
 
-<CheckBox
-    android:id="@+id/ex4"
-    android:layout_width="342dp"
-    android:layout_height="63dp"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentTop="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginStart="35dp"
-    android:layout_marginTop="382dp"
-    android:textColorHighlight="@color/main"
-    android:text="CheckBox" />
+    <CheckBox
+        android:id="@+id/ex4"
+        android:layout_width="342dp"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="382dp"
+        android:textColorHighlight="@color/main"
+        android:text="skills 4"
+        />
+
+    <CheckBox
+        android:id="@+id/ex5"
+        android:layout_width="342dp"
+        android:layout_height="63dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="467dp"
+        android:text="skills 5"
+        android:textColorHighlight="@color/main" />
 
 <TextView
     android:id="@+id/textView6"

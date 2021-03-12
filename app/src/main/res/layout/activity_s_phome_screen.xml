@@ -44,6 +44,7 @@
 
 
         <LinearLayout
+            android:id="@+id/layout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -70,7 +71,7 @@
                 android:textStyle="bold" />
 
             <android.widget.Button
-                android:id="@+id/sp_viewPlanBotton"
+                android:id="@+id/viewPlan1Botton"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:background="@drawable/costum_login_botton"
@@ -82,6 +83,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -119,13 +121,15 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:background="@drawable/weeks_and_resourse_bottom"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+             >
 
             <ImageView
                 android:layout_width="40dp"

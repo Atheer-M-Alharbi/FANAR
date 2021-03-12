@@ -42,7 +42,6 @@ public class LogIn extends AppCompatActivity {
     private static String classes = "net.sourceforge.jtds.jdbc.Driver";
     private static String DataBase = "FANAR";
     private static String url = "jdbc:jtds:sqlserver://" + ip + ":" + Port + "/" + DataBase;
-    private static String me="hi";
     private Connection CONNECTION = null;
 
     @Override

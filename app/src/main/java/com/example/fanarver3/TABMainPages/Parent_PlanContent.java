@@ -6,7 +6,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
+import com.example.fanarver3.Observableboolean;
+import com.example.fanarver3.OnBooleanChangeListener;
 import com.example.fanarver3.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.example.fanarver3.Plan;
@@ -19,6 +22,7 @@ public class Parent_PlanContent extends AppCompatActivity {
     android.widget.Button day2;
     android.widget.Button day3;
     android.widget.Button day4;
+    Button sendFeedBackBotton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,49 +34,82 @@ public class Parent_PlanContent extends AppCompatActivity {
         chipNavigationBar.setItemSelected(R.id.nav_plan,true);
         bottonMenu();
 
+        Observableboolean obsInt = new Observableboolean();
+        obsInt.setOnIntegerChangeListener(new OnBooleanChangeListener() {
+            @Override
+            public void onBooleanChanged(boolean newValue) {
+
+                // check if data changed
+                // by comparing the date in database and today date
+                // if week has passed then Activation send feedback bottun.
+
+            }
+
+        });
+
+        sendFeedBackBotton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(Parent_PlanContent.this, User_Profile.class);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    private void distrbutePlan() {
+
+        // 1. distribute plan exersise on days
+        // 2. approve plan or reject
+        // 3. regenerate plan
+
+
+
         day1.findViewById(R.id.PlanDay1);
         day2.findViewById(R.id.PlanDay2);
         day3.findViewById(R.id.PlanDay3);
         day4.findViewById(R.id.PlanDay4);
 
-        // i need plan...
-        //
+
 
         day1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Parent_PlanContent.this, Parent_PlanResourse.class);
-
                 startActivity(intent);
+
             }
         });
 
         day2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(Parent_PlanContent.this, Parent_PlanResourse.class);
                 startActivity(intent);
+
             }
         });
 
         day3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(Parent_PlanContent.this, Parent_PlanResourse.class);
                 startActivity(intent);
+
             }
         });
 
         day4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent intent = new Intent(Parent_PlanContent.this, Parent_PlanResourse.class);
                 startActivity(intent);
+
             }
         });
+
 
     }
 
@@ -102,4 +139,5 @@ public class Parent_PlanContent extends AppCompatActivity {
             }
         } );
     }
+
 }

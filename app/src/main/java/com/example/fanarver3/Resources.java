@@ -5,21 +5,18 @@ import android.net.Uri;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 public class Resources extends AppCompatActivity {
 
 
-
-
-
-    public void ViewResources(String Resourceurl){
+    public void ViewResources(String Resourceurl) {
 
         Uri url = Uri.parse(Resourceurl);
-        Intent openWebpage = new Intent(Intent.ACTION_VIEW, url );
+        Intent openWebpage = new Intent(Intent.ACTION_VIEW, url);
         startActivity(openWebpage);
 
-    };
+    }
+
+    ;
 
 }
 

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.fanarver3.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -15,6 +16,8 @@ import java.net.URL;
 public class Parent_PlanResourse extends AppCompatActivity {
 
     ChipNavigationBar chipNavigationBar;
+    android.widget.Button EX1;
+    android.widget.Button EX2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,14 +29,30 @@ public class Parent_PlanResourse extends AppCompatActivity {
         chipNavigationBar.setItemSelected(R.id.nav_plan,true);
         bottonMenu();
 
+        EX1.findViewById(R.id.p_viewEX1Botton);
+        EX1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
+        EX2.findViewById(R.id.p_viewEX2Botton);
+        EX2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
     }
 
     public void ViewResources(String Resourceurl){
 
         Uri url = Uri.parse(Resourceurl);
-        Intent openWebpage = new Intent(Intent.ACTION_VIEW, url );
-        startActivity(openWebpage);
+        Intent openWebPage = new Intent(Intent.ACTION_VIEW, url );
+        startActivity(openWebPage);
 
     };
 

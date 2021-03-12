@@ -7,6 +7,20 @@
     tools:context=".TABMainPages.Parent_PlanResourse"
     android:background="@color/white">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E85A8A"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white"
+        app:title="Exercise"
+        />
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/menu"
@@ -33,6 +47,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:src="@drawable/profil"
+
             />
 
         <TextView
@@ -86,7 +101,7 @@
                         android:textStyle="bold" />
 
                     <android.widget.Button
-                        android:id="@+id/sp_viewEX1Botton"
+                        android:id="@+id/p_viewEX1Botton"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:background="@drawable/costum_login_botton"
@@ -124,7 +139,7 @@
                         android:textStyle="bold" />
 
                     <android.widget.Button
-                        android:id="@+id/sp_viewEX2Botton"
+                        android:id="@+id/p_viewEX2Botton"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:background="@drawable/costum_login_botton"
