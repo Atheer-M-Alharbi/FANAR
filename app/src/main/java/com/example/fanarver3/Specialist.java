@@ -2,14 +2,14 @@ package com.example.fanarver3;
 
 import java.util.ArrayList;
 
-public class Specialist {
+public class Specialist extends Home{
 
     // this must be saved in database ****
     public static ArrayList PlanList;
 
 
-    public Specialist() {
-
+    public Specialist(String userID, int password, String email, String userName) {
+        super(userID,password,email,userName);
 
     }
 
@@ -20,6 +20,11 @@ public class Specialist {
     }
 
     ;
+
+    @Override
+    public void joinToCommunity(int commuintyID) {
+
+    }
 
 
 }

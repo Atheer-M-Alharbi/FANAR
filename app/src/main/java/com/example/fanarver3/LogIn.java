@@ -13,11 +13,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+//import android.widget.PopupWindow;
 
-import com.example.fanarver3.SPscreen.SPhomeScreen;
-import com.example.fanarver3.SPscreen.sp_View_plan;
 import com.example.fanarver3.TABMainPages.HomeScreen;
-import com.example.fanarver3.TABMainPages.parent_Plan;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Connection;
@@ -33,6 +31,9 @@ public class LogIn extends AppCompatActivity {
     ImageView IMAGE;
     TextView DEC_TEXT , testview;
     TextInputLayout EMAIL, PASSWORD;
+    //PopupWindow popupWindow;
+    // not sure if it's correct or even work ,but in case :1-static get mothed userID
+    static int userID;
 
     //var's
     private static String ip = "192.168.1.21";
@@ -52,7 +53,7 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         //var
-        goToSignUp = findViewById(R.id.sign_in_button);
+        goToSignUp = findViewById(R.id.sign_up_button);
         IMAGE = findViewById(R.id.imageView6);
         DEC_TEXT = findViewById(R.id.textView3);
         EMAIL = findViewById(R.id.Email);
@@ -62,21 +63,14 @@ public class LogIn extends AppCompatActivity {
         //for testing
         testview = findViewById(R.id.textView);
 
-        //test homepage & navigation bottom
-        logInBOT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LogIn.this, HomeScreen.class);
-                startActivity(intent);
-            }
-        });
+
 
 
         // animation while moving to the next activity
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LogIn.this, SignIn.class);
+                Intent intent = new Intent(LogIn.this, SignUp.class);
                 Pair[] pairs = new Pair[6];
                 pairs[0] = new Pair<View, String>(IMAGE, "logo_image");
                 pairs[1] = new Pair<View, String>(DEC_TEXT, "text");
@@ -107,14 +101,42 @@ public class LogIn extends AppCompatActivity {
 
 
     }
-
+// note the password still need edit
     private void verifyUser() {
-
+        //boolean flag=false;
         if (CONNECTION != null) {
             Statement statement = null;
             try {
+                String email=EMAIL.getEditText().toString();
+                int pass= Integer.parseInt(PASSWORD.getEditText().toString());
+                // check both tables if the user is exist
+                String query = "SELECT Email,Password, ParentID FROM Parent" +
+                        "WHERE Email=" + email + " AND Password=" + pass +
+                        "UNION"+
+                        "SELECT Email,Password,SpecialistID FROM Specialist" +
+                        "WHERE Email="+email+" AND Password="+pass;
                 statement = CONNECTION.createStatement();
-                ResultSet resultSet =  statement.executeQuery(" ");
+                ResultSet resultSet =  statement.executeQuery(query);
+                // if the rows=0
+                if (!resultSet.next()){
+                    // popup alar message
+                    //AlertDialog dialog
+                   // return false;
+                   // pop.showMessageDialog("email or password are invalid")
+                    }
+                else{
+                    // not sure
+                   userID= resultSet.getInt("ParentID");
+                    //test homepage & navigation bottom
+                    logInBOT.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(LogIn.this, HomeScreen.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -122,6 +144,7 @@ public class LogIn extends AppCompatActivity {
         }
         else{
             testview.setText("con is null");
+
         }
     }
 

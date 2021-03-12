@@ -2,13 +2,12 @@ package com.example.fanarver3;
 
 import java.net.URL;
 
-public class Parent {
+public class Parent extends Home{
 
     Plan plan;
 
-
-    public Parent(){
-
+    public Parent(String userID, int password, String email, String userName) {
+        super(userID,password,email,userName);
 
     }
 
@@ -19,6 +18,11 @@ public class Parent {
 
 
     };
+
+    @Override
+    public void joinToCommunity(int commuintyID) {
+
+    }
 
 
 

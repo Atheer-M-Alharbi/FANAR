@@ -21,7 +21,7 @@
         <activity android:name=".SPscreen.SPhomeScreen" />
         <activity android:name=".TABMainPages.EvaluatePlan" />
         <activity android:name=".TABMainPages.User_Profile" />
-        <activity android:name=".SignIn" />
+        <activity android:name=".SignUp" />
         <activity android:name=".LogIn" />
         <activity android:name=".TABMainPages.HomeScreen" />
         <activity android:name=".MainActivity">
