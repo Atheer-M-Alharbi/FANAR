@@ -13,7 +13,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-//import android.widget.PopupWindow;
 
 import com.example.fanarver3.TABMainPages.HomeScreen;
 import com.google.android.material.textfield.TextInputLayout;
@@ -23,20 +22,20 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+// Done but won't work
 public class LogIn extends AppCompatActivity {
 
     //var's
     Button goToSignUp, logInBOT;
     ImageView IMAGE;
-    TextView DEC_TEXT , testview;
+    TextView DEC_TEXT, testview, user;
     TextInputLayout EMAIL, PASSWORD;
     //PopupWindow popupWindow;
     // not sure if it's correct or even work ,but in case :1-static get mothed userID
     static int userID;
 
     //var's
-    private static String ip = "192.168.1.21";
+    private static String ip = "169.254.115.210";
     private static String userName = "FANAR";
     private static String Password = "qwer";
     private static String Port = "1433";
@@ -44,6 +43,8 @@ public class LogIn extends AppCompatActivity {
     private static String DataBase = "FANAR";
     private static String url = "jdbc:jtds:sqlserver://" + ip + ":" + Port + "/" + DataBase;
     private Connection CONNECTION = null;
+
+    boolean isverify;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,7 @@ public class LogIn extends AppCompatActivity {
 
         //for testing
         testview = findViewById(R.id.textView);
-
-
-
+        user = findViewById(R.id.userID);
 
         // animation while moving to the next activity
         goToSignUp.setOnClickListener(new View.OnClickListener() {
@@ -90,59 +89,85 @@ public class LogIn extends AppCompatActivity {
         //ms sql server database connection
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         try {
+            DriverManager.setLoginTimeout(100);
             Class.forName(classes);
             CONNECTION = DriverManager.getConnection(url, userName, Password);
-            testview.setText("con is success");
-        } catch (ClassNotFoundException | SQLException e) {
+
+            testview.setText("CONNECTION is successed");
+
+            if (CONNECTION != null) {
+                Statement statement = CONNECTION.createStatement();
+                ResultSet resultSet = statement.executeQuery("Select * from Parent;");
+                /*while (resultSet.next()){
+                    testview.setText(resultSet.getString(1));
+                    testview.append(resultSet.getString(2));
+                    testview.append(resultSet.getString(3));
+                    testview.append(resultSet.getString(4));
+                    testview.append(resultSet.getString(5));
+
+
+
+                }*/
+                logInBOT.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (isverify) {
+                            Intent intent = new Intent(LogIn.this, HomeScreen.class);
+                            startActivity(intent);
+                        }
+                    }
+                });
+
+            } else {
+                testview.append("CONNECTION is null");
+            }
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            testview.setText("error,failural");
+            testview.setText("ERROR");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            testview.setText("ERROR");
         }
 
 
     }
-// note the password still need edit
+
+
     private void verifyUser() {
-        //boolean flag=false;
+
         if (CONNECTION != null) {
             Statement statement = null;
             try {
-                String email=EMAIL.getEditText().toString();
-                int pass= Integer.parseInt(PASSWORD.getEditText().toString());
+                String email = EMAIL.getEditText().toString();
+                String pass = PASSWORD.getEditText().toString();
                 // check both tables if the user is exist
                 String query = "SELECT Email,Password, ParentID FROM Parent" +
                         "WHERE Email=" + email + " AND Password=" + pass +
-                        "UNION"+
+                        "UNION" +
                         "SELECT Email,Password,SpecialistID FROM Specialist" +
-                        "WHERE Email="+email+" AND Password="+pass;
+                        "WHERE Email=" + email + " AND Password=" + pass;
                 statement = CONNECTION.createStatement();
-                ResultSet resultSet =  statement.executeQuery(query);
-                // if the rows=0
-                if (!resultSet.next()){
-                    // popup alar message
-                    //AlertDialog dialog
-                   // return false;
-                   // pop.showMessageDialog("email or password are invalid")
-                    }
-                else{
-                    // not sure
-                   userID= resultSet.getInt("ParentID");
-                    //test homepage & navigation bottom
-                    logInBOT.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(LogIn.this, HomeScreen.class);
-                            startActivity(intent);
-                        }
-                    });
+                ResultSet resultSet = statement.executeQuery(query);
+                // if THE USE IS exist
+                if (resultSet.next()) {
+                    // to save the id of the user
+                    user.setText(resultSet.getInt("ID"));
+                    isverify= true;
+                }
+                // if it was invaled or dosen't have an accuont
+                else {
+                    testview.setText("email or password are invalid");
+                    isverify= false;
 
+                    // Intent intent = new Intent(LogIn.this, SignUp.class);
+                    // startActivity(intent);
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-
-        }
-        else{
+        } else {
             testview.setText("con is null");
 
         }

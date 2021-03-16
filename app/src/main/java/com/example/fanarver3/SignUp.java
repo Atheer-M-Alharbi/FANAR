@@ -10,8 +10,10 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.example.fanarver3.TABMainPages.HomeScreen;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,15 +24,14 @@ import java.sql.Statement;
 public class SignUp extends AppCompatActivity {
 
     //var's
-    Button logInBOT;
+    Button logInBOT, SignInBtn;
     AutoCompleteTextView UserType;
     TextInputLayout EMAIL, PASSWORD,NAME,CONFIRM_PASSWORD;
-    //PopupWindow popupWindow;
-    // not sure if it's correct or even work ,but in case :1-static get mothed userID
-     static String userID;
+    TextView  testview, newUser;
+    static int currUserID;
 
     //var's
-    private static String ip ="192.168.1.21";
+    private static String ip ="192.168.43.13";
     private static String userName ="FANAR";
     private static String Password ="qwer";
     private static String Port ="1433";
@@ -39,6 +40,8 @@ public class SignUp extends AppCompatActivity {
     private static String url ="jdbc:jtds:sqlserver://"+ip+":"+Port+"/"+DataBase;
 
     private static Connection CONNECTION = null;
+
+    boolean isCreate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,10 @@ public class SignUp extends AppCompatActivity {
         NAME= findViewById(R.id.user_name);
         CONFIRM_PASSWORD=findViewById(R.id.confirmPassword);
         UserType= findViewById(R.id.UserTypeSelected);
+
+        //for testing
+        testview = findViewById(R.id.textView);
+        newUser = findViewById(R.id.newUser);
 
         logInBOT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,9 +76,18 @@ public class SignUp extends AppCompatActivity {
         try {
             Class.forName(classes);
             CONNECTION = DriverManager.getConnection(url, userName, Password);
+            SignInBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    createNewUser();
+                    Intent intent = new Intent(SignUp.this, HomeScreen.class );
+                    startActivity(intent);
+                }
+            });
 
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+            testview.setText("error, TRY AGAIN!!!!");
         }
         //FILL PLAN OPTION
         fillUSERTYPE(this);
@@ -79,78 +95,70 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-    // note the password still need edit
-    // WE NEED TO ASK THE USER WHO IS HE?
     private void createNewUser() {
-        String userName=NAME.getEditText().toString();
+        String userName = NAME.getEditText().toString();
         String email = EMAIL.getEditText().toString();
-        int pass = Integer.parseInt(PASSWORD.getEditText().toString());
+        String pass = PASSWORD.getEditText().toString();
         int confirmPass = Integer.parseInt(CONFIRM_PASSWORD.getEditText().toString());
-        String type= UserType.getText().toString();
-
-        if (CONNECTION != null) {
-            Statement statement = null;
-            try {
-                // check both tables if the user is exist
-                String query = "SELECT Email,Password, ParentID FROM Parent" +
-                        "WHERE Email=" + email  +
-                        "UNION" +
-                        "SELECT Email,Password,SpecialistID FROM Specialist" +
-                        "WHERE Email=" + email ;
-                statement = CONNECTION.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
-                // if the rows=0
-                //check if exist
-                if (resultSet.next()) {
-                    // popup alar message
-                    //AlertDialog dialog
-                    // pop.showMessageDialog("this email "+email+"is already exist, if this was you please press forget password")
-                } //create new user
-                 else {
-                     //check the email - it's ok
-
-                    int isemail=email.indexOf("@");
-                    int isemail2=email.indexOf(".com");
-                    if(!((isemail & isemail2) == 0)){
-                    if(pass==confirmPass){
-                        int ID = Integer.parseInt(userID);
-                        if(type.equals("Parent")){
-                            ID=ID++;
-                            userID="0"+ID;
-                            Home parent=new Parent(userID,pass,email,userName);
-                            query="INSERT INTO Parent (ParentID,ParentName ,Email,Password  )\n" +
-                                    "VALUES ('"+userID+"', '"+userName+"' ,'"+email+"',"+pass+");";
-                            resultSet = statement.executeQuery(query);
-
-
+        String type = UserType.getText().toString();
+        String userID;
+        if (!(userName.equals("Name"))) {
+            if (CONNECTION != null) {
+                Statement statement = null;
+                try {
+                    //check the email
+                    int isemail = email.indexOf("@");
+                    int isemail2 = email.indexOf(".com");
+                    if ((isemail & isemail2) == 1) {
+                        // check both tables if the user is exist
+                        String query = "SELECT Email,Password, ParentID FROM Parent" +
+                                "WHERE Email=" + email +
+                                "UNION" +
+                                "SELECT Email,Password,SpecialistID FROM Specialist" +
+                                "WHERE Email=" + email;
+                        statement = CONNECTION.createStatement();
+                        ResultSet resultSet = statement.executeQuery(query);
+                        //check if exist
+                        if (resultSet.next()) {
+                            testview.setText("this email " + email + "is already exist, if it was yours please go to LogIn and choose forget password");
+                        } else {
+                            // check the pass
+                            if (pass.equals(confirmPass)) {
+                                // ganeratr the ID and insert the object to DB
+                                if (type.equals("Parent")) {
+                                    userID = "0" + currUserID;
+                                    Home parent = new Parent(userID, pass, email, userName);
+                                    query = "INSERT INTO Parent (ParentID,ParentName ,Email,Password)" +
+                                            "VALUES ('" + userID + "', '" + userName + "' ,'" + email + "'," + pass + ");";
+                                    resultSet = statement.executeQuery(query);
+                                    currUserID++;
+                                } else if (type.equals("Specialist")) {
+                                    userID = "1" + currUserID;
+                                    Home specialist = new Specialist(userID, pass, email, userName);
+                                    query = "INSERT INTO Specialist (SpecialistID,SpecialistName ,Email,Password  )\n" +
+                                            "VALUES ('" + userID + "', '" + userName + "' ,'" + email + "'," + pass + ");";
+                                    resultSet = statement.executeQuery(query);
+                                    currUserID++;
+                                }
+                            } else {
+                                testview.setText("the password and comfirm password do not match");
+                            }
                         }
-                        else if (type.equals("Specialist")){
-                            userID= "1"+userID;
-                            Home specialist=new Specialist(userID,pass,email,userName);
-                            query="INSERT INTO Specialist (SpecialistID,SpecialistName ,Email,Password  )\n" +
-                                    "VALUES ('"+userID+"', '"+userName+"' ,'"+email+"',"+pass+");";
-                            resultSet = statement.executeQuery(query);
-                        }
-
                     }
-                    else{
-                        // popup alar message
-                        //AlertDialog dialog
-                        // pop.showMessageDialog("the password and comfirm password isn't simmiler")
+                    //check email
+                    else {
+                        testview.setText("the email incorrect, it should be like this example: example@example.com");
                     }
-                        //
-
-                }//check email
-                    else{
-                        // popup alar message
-                        //AlertDialog dialog
-                        // pop.showMessageDialog("the password and comfirm password isn't simmiler")
-                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
             }
-        }}
+        }
+        else{
+            testview.setText("The Name is incorrect");
+        }
+    }
+
     public void fillUSERTYPE(SignUp view){
 
         UserType = (AutoCompleteTextView) view.findViewById(R.id.UserTypeSelected);

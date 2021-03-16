@@ -10,14 +10,14 @@ import java.sql.Statement;
 public abstract class Home {
     protected String userID;
     // need to change
-    protected int password;
+    protected String password;
     protected int commuintyID;
     protected String email;
     protected String userName;
     private String userType;
 
 
-    public Home(String userID, int password, String email, String userName) {
+    public Home(String userID, String password, String email, String userName) {
         this.userID = userID;
         this.password = password;
         this.email = email;
@@ -25,63 +25,48 @@ public abstract class Home {
         this.userType = userType;
     }
 
-    public String getUserID() {
-        return userID;
+    public abstract String getUserID(String email) throws SQLException;
+
+    public abstract String getPassword(String userID,String email);
+
+    public abstract String getPassword();
+
+    public abstract void setPassword(String password);
+
+    public abstract int getCommuintyID(String userID,String email);
+
+    public abstract int getCommuintyID();
+
+    public abstract void setCommuintyID(int commuintyID);
+
+    public abstract String getEmail(String userID);
+
+    public abstract String getEmail();
+
+    public abstract void setEmail(String email);
+
+    public abstract String getUserName(String userID,String email);
+
+    public abstract String getUserName();
+
+    public abstract void setUserName(String userName);
+
+    public  String getUserType(String userID){
+        char t=userID.charAt(0);
+        if (t==0)
+            return "parent";
+        else
+            return "Specialist";
+
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public int getPassword() {
-        return password;
-    }
-
-    public void setPassword(int password) {
-        this.password = password;
-    }
-
-    public int getCommuintyID() {
-        return commuintyID;
-    }
-
-    public void setCommuintyID(int commuintyID) {
-        this.commuintyID = commuintyID;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
+    public abstract String getUserType();
 
     public abstract void joinToCommunity(int commuintyID);
 
 
-    public void newParent(String userID, int password, String email, String userName) {
-        Parent parent = new Parent(userID, password, email, userName);
-    }
-
     public static ResultSet sqlConn(String query) {
-        String ip = "192.168.1.21";
+        String ip = "192.168.43.13";
         String userName = "FANAR";
         String Password = "qwer";
         String Port = "1433";

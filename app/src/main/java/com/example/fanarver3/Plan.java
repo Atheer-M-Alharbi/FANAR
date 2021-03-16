@@ -47,8 +47,6 @@ public class Plan implements Parcelable {
 
     }
 
-     }
-
 
     protected Plan(Parcel in) {
         Planlevel = in.readInt();

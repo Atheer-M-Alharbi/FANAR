@@ -26,8 +26,16 @@
             android:layout_height="165dp"
             android:transitionName="logo_image"
             android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             app:srcCompat="@drawable/fan1_removebg_preview" />
+
+        <TextView
+            android:id="@+id/newUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:visibility="invisible"
+            tools:visibility="invisible" />
 
         <TextView
             android:id="@+id/textView2"
@@ -41,6 +49,11 @@
             android:layout_marginTop="10dp"
             android:transitionName="text"
             />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
         // username
         <com.google.android.material.textfield.TextInputLayout

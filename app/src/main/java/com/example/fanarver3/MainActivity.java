@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.sql.Connection;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     Animation topAnim , bottomAnim;
     ImageView image;
     TextView text1 , text2;
+    Connection connection;
+    String conResult="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,9 +32,6 @@ public class MainActivity extends AppCompatActivity {
         //hide state bar (the one show the sharge and time in phone
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
-
-
 
         //Animation of the facade screen load it from anim folder where we defind it
         topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
@@ -59,4 +60,5 @@ public class MainActivity extends AppCompatActivity {
         },MOVING_SCREEN);
 
     }
+    //public void GetTextFromSQL(View v){ }
 }
