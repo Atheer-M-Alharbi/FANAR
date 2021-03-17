@@ -95,19 +95,7 @@ public class Parent extends Home{
         return null;
     }
 
-    public  void setPlan (Plan p){
-        //plan=new Plan();
-    };
 
-    public  void getPlan(boolean isApprove,URL url){
-        if(isApprove){
-            //show the plan
-        }
-
-
-
-
-    }
 
     @Override
     public void joinToCommunity(int commuintyID) {

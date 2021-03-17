@@ -36,7 +36,7 @@ public class SignUp extends AppCompatActivity {
     private static String Password ="qwer";
     private static String Port ="1433";
     private static String classes ="net.sourceforge.jtds.jdbc.Driver";
-    private static String DataBase ="FANAR";
+    private static String DataBase ="FANARDB";
     private static String url ="jdbc:jtds:sqlserver://"+ip+":"+Port+"/"+DataBase;
 
     private static Connection CONNECTION = null;

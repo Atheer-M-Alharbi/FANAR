@@ -8,19 +8,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
-import com.example.fanarver3.Observableboolean;
-import com.example.fanarver3.OnBooleanChangeListener;
+import com.example.fanarver3.Home;
+import com.example.fanarver3.Observable;
+import com.example.fanarver3.OnChangeListener;
 import com.example.fanarver3.R;
 import com.example.fanarver3.Plan;
+import com.example.fanarver3.SPscreen.SPhomeScreen;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.example.fanarver3.Specialist;
 
@@ -36,18 +45,44 @@ public class parent_Plan extends AppCompatActivity {
     android.widget.AutoCompleteTextView IQLevelSelected;
     android.widget.AutoCompleteTextView PerceptionSelected;
     TextInputLayout child_Name;
+    Button okayBot;
     // to be able to reach it from evaluation plan class
     public static ArrayList selrctedSkills;
 
     // need it to call method of this class with the same object
     public static parent_Plan parentPLAN;
-    public static Observableboolean obsInt;
+    public static Observable obsInt;
+
+    String Parent_user_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parent__plan);
 
+
+        Parent_user_ID = getIntent().getStringExtra("user");
+
+        // check if this parent has plan or not
+        String quiry = "SELECT planobj FROM ChildPlan WHERE ParentID  =  "+ Parent_user_ID + ";";  // <---('.')<---
+        ResultSet rs = Home.sqlConn(quiry);
+        try {
+            if (rs.next() != false) {
+                Plan plan = Plan.loadPlanFromdatabase(quiry, 1);
+                rs.getBlob(0);
+                if (plan.isPlanState() == false) {
+                    setContentView(R.layout.wating_for_approval);
+                } else {
+                    Intent intent = new Intent(parent_Plan.this, Parent_PlanContent.class);
+                    intent.putExtra("plan", plan);
+                    startActivity(intent);
+                }
+            }
+        } catch (SQLException | IOException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        setContentView(R.layout.activity_parent__plan);
         // get menu id & make homescreen selecteds
         chipNavigationBar = findViewById(R.id.menu);
         chipNavigationBar.setItemSelected(R.id.nav_plan, true);
@@ -82,20 +117,25 @@ public class parent_Plan extends AppCompatActivity {
         createPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // ctrl + alt + L
 
-                if ((!AutismLevelSelected.getText().toString().equals(" ")) && (!ageSelected.getText().toString().equals(" ")) && (!IQLevelSelected.getText().toString().equals(" ")) && (!PerceptionSelected.getText().toString().equals(" "))) {
+                // check child name is not empty!!!!!!!!!!!!!!!!!!!
+                if ((!child_Name.getEditText().toString().equals(" ")) && (!AutismLevelSelected.getText().toString().equals(" ")) && (!ageSelected.getText().toString().equals(" ")) && (!IQLevelSelected.getText().toString().equals(" ")) && (!PerceptionSelected.getText().toString().equals(" "))) {
                     //2. send required factor to the model
 
                     Plan plan = new Plan(child_Name.getEditText().toString());
                     int thePlanLevel = plan.GenerateDelvlopmentPlan(AutismLevelSelected.getText().toString(), ageSelected.getText().toString(), IQLevelSelected.getText().toString(), PerceptionSelected.getText().toString());
 
-                    // pass parent id to this method
-                    plan.insetINTOdatabase();
-                    ////////////////////////////////
                     // create new object of Observableboolean to check on plan state
-                    obsInt = new Observableboolean();
+                    obsInt = new Observable();
                     PlanLevel(thePlanLevel, plan);
 
+                    // added new col ---> parent id + plan object
+                    Home.sqlConn("INSERT INTO ChildPlan(PlanID, PlanLevel, Approve, planobj, SpecialistID, ChildID, ParentID)" +
+                            "VALUES (" + plan.getPlanID() + "," + thePlanLevel + ",0, NULL, NULL," + plan.childID+ "," + Parent_user_ID + ");");
+
+                } else {
+                    openDialog();
                 }
 
 
@@ -105,42 +145,54 @@ public class parent_Plan extends AppCompatActivity {
 
     }
 
+
+    public void openDialog() {
+        exampleDialog ed = new exampleDialog();
+        ed.show(getSupportFragmentManager(), "error dialog");
+    }
+
     public void PlanLevel(int thePlanLevel, Plan plan) {
 
         switch (thePlanLevel) {
             case 0:
                 setContentView(R.layout.skils_level_1);
-                getSelectedLevel(plan);
                 break;
             case 1:
                 setContentView(R.layout.skils_level_2);
-                getSelectedLevel(plan);
                 break;
             case 2:
                 setContentView(R.layout.skils_level_3);
-                getSelectedLevel(plan);
                 break;
             case 3:
                 setContentView(R.layout.skils_level_4);
-                getSelectedLevel(plan);
                 break;
         }
 
-        obsInt.setOnIntegerChangeListener(new OnBooleanChangeListener() {
+
+        okayBot = findViewById(R.id.Okay);
+        okayBot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSelectedLevel(plan);
+            }
+        });
+
+
+        obsInt.setOnChangeListener(new OnChangeListener() {
             @Override
             public void onBooleanChanged(boolean newValue) {
 
-                if (plan.PlanState == false) {
+                if (newValue == false) {
                     setContentView(R.layout.wating_for_approval);
                 } else {
                     Intent intent = new Intent(parent_Plan.this, Parent_PlanContent.class);
+                    intent.putExtra("plan", plan);
                     startActivity(intent);
                 }
             }
 
+
         });
-
-
     }
 
     private void bottonMenu() {
@@ -167,38 +219,36 @@ public class parent_Plan extends AppCompatActivity {
         });
     }
 
-    public void getSelectedLevel(Plan planLevel) {
+    public void getSelectedLevel(Plan plan) {
 
         CheckBox skill1 = findViewById(R.id.ex1);
         CheckBox skill2 = findViewById(R.id.ex2);
         CheckBox skill3 = findViewById(R.id.ex3);
         CheckBox skill4 = findViewById(R.id.ex4);
-        CheckBox skill5 = findViewById(R.id.ex5);
 
 
         if (skill1.isSelected()) {
-            selrctedSkills.add(skill1.getId());
+            selrctedSkills.add(skill1.getText().toString());
         }
         if (skill2.isSelected()) {
-            selrctedSkills.add(skill2.getId());
+            selrctedSkills.add(skill2.getText().toString());
         }
         if (skill3.isSelected()) {
-            selrctedSkills.add(skill3.getId());
+            selrctedSkills.add(skill3.getText().toString());
         }
         if (skill4.isSelected()) {
-            selrctedSkills.add(skill4.getId());
-        }
-        if (skill5.isSelected()) {
-            selrctedSkills.add(skill5.getId());
+            selrctedSkills.add(skill4.getText().toString());
         }
 
-        //planLevel is the plan object
-        planLevel.fetchResources(selrctedSkills);
 
-        /////////////////////////////////////////
-        // must selct one spishalist(?)
-        //
-        Specialist.PlanList.add(planLevel);
+        // setselrctedSkills for the plan
+        try {
+            plan.fetchResources(selrctedSkills);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        Specialist.AssigSpTolist(plan.getPlanID());
 
     }
 

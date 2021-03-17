@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.example.fanarver3.Plan;
 import com.example.fanarver3.R;
 import com.example.fanarver3.SPscreen.sp_CommunityScreen;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -19,6 +21,7 @@ public class HomeScreen extends AppCompatActivity {
     ChipNavigationBar chipNavigationBar;
     static HomeScreen h;
 
+    TextView textthetest;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
@@ -33,6 +36,8 @@ public class HomeScreen extends AppCompatActivity {
 
 
     private void bottonMenu() {
+
+
 
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override

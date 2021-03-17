@@ -8,10 +8,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.fanarver3.Home;
+import com.example.fanarver3.Plan;
 import com.example.fanarver3.R;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.net.URL;
+import java.sql.ResultSet;
 
 public class Parent_PlanResourse extends AppCompatActivity {
 
@@ -29,22 +32,47 @@ public class Parent_PlanResourse extends AppCompatActivity {
         chipNavigationBar.setItemSelected(R.id.nav_plan,true);
         bottonMenu();
 
-        EX1.findViewById(R.id.p_viewEX1Botton);
-        EX1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
+        // RECIVE PASSED VALUE
+        int numOfSkill = Integer.parseInt(getIntent().getStringExtra("numOFskill"));
+
+        if (numOfSkill>=1) {
+            EX1.findViewById(R.id.p_viewEX1Botton);
+            EX1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String ExerciseID = getIntent().getParcelableExtra("skill1");
+                    ResultSet Exercise = Home.sqlConn("select Exercise from Resources where ExerciseID ="+ExerciseID+";");
+                    ViewResources(Exercise.toString());
+                }
+            });
 
 
-        EX2.findViewById(R.id.p_viewEX2Botton);
-        EX2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            EX2.findViewById(R.id.p_viewEX2Botton);
+            EX2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String ExerciseID = getIntent().getParcelableExtra("skill2");
+                    ResultSet Exercise = Home.sqlConn("select Exercise from Resources where ExerciseID ="+ExerciseID+";");
+                    ViewResources(Exercise.toString());
+                }
+            });
+        }
 
-            }
-        });
+
+        if (numOfSkill<1) {
+            EX2.setVisibility(View.GONE);
+
+            EX1.findViewById(R.id.p_viewEX1Botton);
+            EX1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String ExerciseID = getIntent().getParcelableExtra("skill");
+                    ResultSet Exercise = Home.sqlConn("select Exercise from Resources where ExerciseID ="+ExerciseID+";");
+                    ViewResources(Exercise.toString());
+                }
+            });
+        }
 
     }
 

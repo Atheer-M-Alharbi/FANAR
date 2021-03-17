@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.fanarver3.Home;
+import com.example.fanarver3.Observable;
 import com.example.fanarver3.Plan;
 import com.example.fanarver3.R;
 import com.example.fanarver3.Specialist;
@@ -53,8 +55,6 @@ public class sp_View_plan extends AppCompatActivity {
 
         // RECIVE PASSED OBJECT
         Plan thisPlan = getIntent().getParcelableExtra("plan");
-        // RECIVE PASSED VALUE
-        int Planid = Integer.parseInt(getIntent().getStringExtra("planid"));
 
 
         //// FIND COMMPONENET BY ID
@@ -84,7 +84,6 @@ public class sp_View_plan extends AppCompatActivity {
                     sendCorretlevelBotton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // thisPlan.AdjustDelvlopmentPlan();
                             int level;
                             switch (correct_levelm1.getText().toString()) {
                                 case "Easy":
@@ -117,18 +116,20 @@ public class sp_View_plan extends AppCompatActivity {
         ApproveBotton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                thisPlan.PlanState = true;
-                // remove this plan from sp list
-                Specialist.PlanList.remove(thisPlan);
                 // change plan state to true(approve)
                 parent_Plan.obsInt.set(true);
+                Home.sqlConn("UPDATE ChildPlan\n" +
+                        "SET Approve  = 1 " +
+                        "WHERE PlanID  = "+thisPlan.getPlanID()+";");
+                // remove this plan from sp list
+                Specialist.PlanList.remove(thisPlan);
                 Intent intent = new Intent(sp_View_plan.this, SPhomeScreen.class);
                 startActivity(intent);
 
             }
         });
 
-        // ... need to work on this but wait for the sp replay..(-_-)
+
         viewPlancontent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,35 +143,11 @@ public class sp_View_plan extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    public static void fetchchildInfro(int id) {
+    public static void fetchchildInfro(int id) throws SQLException {
 
-        //var's for database connection
-        Connection CONNECTION = null;
-        String ip = "192.168.1.21";
-        String userName = "FANAR";
-        String Password = "qwer";
-        String Port = "1433";
-        String classes = "net.sourceforge.jtds.jdbc.Driver";
-        String DataBase = "FANAR";
-        String url = "jdbc:jtds:sqlserver://" + ip + ":" + Port + "/" + DataBase;
-
-        // fetch from dataset
-        // establish ms sql server database connection
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
         ResultSet resultSet_childInfo;
-        String test = null;
 
-        try {
-            Class.forName(classes);
-            CONNECTION = DriverManager.getConnection(url, userName, Password);
-
-            if (CONNECTION != null) {
-                Statement statement = null;
-
-                try {
-                    statement = CONNECTION.createStatement();
-                    resultSet_childInfo = statement.executeQuery("SELECT ChildName,autismLevel,ChildAge,IqLevel,Perception FROM Child WHERE ChildID =" + id + ";");
+                    resultSet_childInfo = Home.sqlConn("SELECT ChildName,autismLevel,ChildAge,IqLevel,Perception FROM Child WHERE ChildID =" + id + ";");
 
                     String ChildName = resultSet_childInfo.getString("ChildName");
                     int autismLevel = resultSet_childInfo.getInt("autismLevel");
@@ -180,21 +157,6 @@ public class sp_View_plan extends AppCompatActivity {
                     childinfo.setText("ChildName: " + ChildName + "\n autismLevel" + autismLevel + "\nChildAge" + ChildAge + "\n" +
                             "IqLevel" + IqLevel + "\nPerception" + Perception + "\n");
 
-                    //end of second try
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-
-            } else {
-                test = "con is null";
-            }
-
-            //end of first try
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-            test = "error!!!!";
-            // show textbox show error
-        }
 
 
     }

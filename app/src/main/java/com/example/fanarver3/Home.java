@@ -66,12 +66,12 @@ public abstract class Home {
 
 
     public static ResultSet sqlConn(String query) {
-        String ip = "192.168.43.13";
+        String ip = "192.168.1.21";
         String userName = "FANAR";
         String Password = "qwer";
         String Port = "1433";
         String classes = "net.sourceforge.jtds.jdbc.Driver";
-        String DataBase = "FANAR";
+        String DataBase = "FANARDB";
         String url = "jdbc:jtds:sqlserver://" + ip + ":" + Port + "/" + DataBase;
         Connection CONNECTION = null;
         try {
@@ -95,5 +95,28 @@ public abstract class Home {
         return resultSet;
     }
 
+    public static Connection connection() {
+
+        String ip = "192.168.1.21";
+        String Port = "1433";
+
+        String userName = "FANAR";
+        String Password = "qwer";
+
+        String classes = "net.sourceforge.jtds.jdbc.Driver";
+        String DataBase = "FANARDB";
+        String url = "jdbc:jtds:sqlserver://" + ip + ":" + Port + "/" + DataBase;
+
+        Connection CONNECTION = null;
+        try {
+            Class.forName(classes);
+            CONNECTION = DriverManager.getConnection(url, userName, Password);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+
+        return CONNECTION;
+    }
 }
 

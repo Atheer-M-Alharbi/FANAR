@@ -58,7 +58,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Email"
+
             android:hint="Email"
             android:textColorHint="@color/main"
             app:boxStrokeColor="#BCBAB8"
@@ -67,6 +67,7 @@
             android:transitionName="email_trans">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -78,7 +79,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/password"
+
             android:hint="Password"
             android:textColorHint="@color/main"
             app:hintTextColor="#D2FF9800"
@@ -88,6 +89,7 @@
             android:transitionName="password_trans">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"/>

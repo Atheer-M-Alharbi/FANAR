@@ -1,25 +1,68 @@
 package com.example.fanarver3;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.io.IOException;
+import java.sql.SQLException;
 
-public class Specialist extends Home{
+public class Specialist extends Home {
     //get by query
     //set to update in the DB
     // COMMUINTY
     // ASSIG SSHILST
 
     // this must be saved in database ****
-    public static ArrayList PlanList;
+    public static ArrayList<Plan> PlanList;
 
 
     public Specialist(String userID, String password, String email, String userName) {
-        super(userID,password,email,userName);
+        super(userID, password, email, userName);
 
     }
 
+    public static void filllist(String id) {
+
+        // check if this parent has plan or not
+        String quiry = "SELECT planobj FROM ChildPlan WHERE SpecialistID  = "+ id + ";";  // <---('.')<---
+        ResultSet rs = Home.sqlConn(quiry);
+        try {
+            if (rs.next() != false) {
+                Plan.loadPlanFromdatabase(quiry, 0);
+            }
+        } catch (SQLException | IOException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+    }
+
+    public static void AssigSpTolist(int planid) {
+
+        ArrayList Specialist = null;
+        String quiry = "Select SpecialistID from Specialist;";
+
+        ResultSet rs = Home.sqlConn(quiry);
+        try {
+            while (rs.next())
+                Specialist.add(rs.getInt(0));
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        int random = (int) (Math.random() * Specialist.size() +1);
+        if(Specialist.size()>0) {
+            Home.sqlConn("UPDATE ChildPlan SET SpecialistID = "+Specialist.get(random)+"WHERE PlanID = "+planid+";");
+        }else{
+
+        }
+
+
+}
+
     @Override
     public String getUserID(String email) {
-        String Q="select ID from parent where";
+        String Q = "select ID from parent where";
         return Q;
     }
 
@@ -88,13 +131,6 @@ public class Specialist extends Home{
         return null;
     }
 
-    public boolean AddToSPlist(Plan plan) {
-
-        PlanList.add(plan);
-        return true;
-    }
-
-    // remove
 
     @Override
     public void joinToCommunity(int commuintyID) {

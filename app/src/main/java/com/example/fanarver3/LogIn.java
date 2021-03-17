@@ -14,7 +14,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.fanarver3.SPscreen.SPhomeScreen;
 import com.example.fanarver3.TABMainPages.HomeScreen;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Connection;
@@ -29,22 +31,24 @@ public class LogIn extends AppCompatActivity {
     Button goToSignUp, logInBOT;
     ImageView IMAGE;
     TextView DEC_TEXT, testview, user;
-    TextInputLayout EMAIL, PASSWORD;
+    TextInputEditText EMAIL, PASSWORD;
+    String Parent_user_ID;
+    String Specialist_user_ID;
     //PopupWindow popupWindow;
     // not sure if it's correct or even work ,but in case :1-static get mothed userID
-    static int userID;
+
 
     //var's
-    private static String ip = "169.254.115.210";
+    private static String ip = "192.168.1.21";
     private static String userName = "FANAR";
     private static String Password = "qwer";
     private static String Port = "1433";
     private static String classes = "net.sourceforge.jtds.jdbc.Driver";
-    private static String DataBase = "FANAR";
+    private static String DataBase = "FANARDB";
     private static String url = "jdbc:jtds:sqlserver://" + ip + ":" + Port + "/" + DataBase;
     private Connection CONNECTION = null;
 
-    boolean isverify;
+    public boolean isverify = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,15 +95,15 @@ public class LogIn extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         try {
-            DriverManager.setLoginTimeout(100);
+            //DriverManager.setLoginTimeout(100);
             Class.forName(classes);
             CONNECTION = DriverManager.getConnection(url, userName, Password);
 
             testview.setText("CONNECTION is successed");
 
             if (CONNECTION != null) {
-                Statement statement = CONNECTION.createStatement();
-                ResultSet resultSet = statement.executeQuery("Select * from Parent;");
+               // Statement statement = CONNECTION.createStatement();
+                //ResultSet resultSet = statement.executeQuery("Select * from Parent;");
                 /*while (resultSet.next()){
                     testview.setText(resultSet.getString(1));
                     testview.append(resultSet.getString(2));
@@ -113,9 +117,15 @@ public class LogIn extends AppCompatActivity {
                 logInBOT.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        verifyUser();
                         if (isverify) {
                             Intent intent = new Intent(LogIn.this, HomeScreen.class);
+                            intent.putExtra("user",Parent_user_ID);
                             startActivity(intent);
+                        }else{
+                            Intent intent = new Intent(LogIn.this, SPhomeScreen.class);
+                            startActivity(intent);
+
                         }
                     }
                 });
@@ -132,33 +142,30 @@ public class LogIn extends AppCompatActivity {
         }
 
 
+
     }
 
+   private void verifyUser() {
 
-    private void verifyUser() {
-
-        if (CONNECTION != null) {
-            Statement statement = null;
+            Statement statement;
             try {
-                String email = EMAIL.getEditText().toString();
-                String pass = PASSWORD.getEditText().toString();
+                String email = EMAIL.getText().toString();
+                String pass = PASSWORD.getText().toString();
                 // check both tables if the user is exist
-                String query = "SELECT Email,Password, ParentID FROM Parent" +
-                        "WHERE Email=" + email + " AND Password=" + pass +
-                        "UNION" +
-                        "SELECT Email,Password,SpecialistID FROM Specialist" +
-                        "WHERE Email=" + email + " AND Password=" + pass;
+                String query = "SELECT ParentID FROM Parent WHERE Email ='" + email + "' AND Password ='" + pass +"';";
+                       // "UNION SELECT Email,Password,SpecialistID FROM Specialist" +
+                        //" WHERE Email ='" + email + "' AND Password ='" + pass+"';";
                 statement = CONNECTION.createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
                 // if THE USE IS exist
                 if (resultSet.next()) {
                     // to save the id of the user
-                    user.setText(resultSet.getInt("ID"));
+                    Parent_user_ID = resultSet.getString("ParentID");
+                   // user.setText(resultSet.getInt("ParentID"));
                     isverify= true;
-                }
+                }else {
                 // if it was invaled or dosen't have an accuont
-                else {
-                    testview.setText("email or password are invalid");
+                    testview.append("email or password are invalid");
                     isverify= false;
 
                     // Intent intent = new Intent(LogIn.this, SignUp.class);
@@ -167,10 +174,7 @@ public class LogIn extends AppCompatActivity {
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-        } else {
-            testview.setText("con is null");
 
-        }
     }
 
 }

@@ -22,6 +22,44 @@
         />
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:id="@+id/week1"
+            android:layout_width="369dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="63dp"
+            android:text="Evaluate your child's improvement by selecting the skills that your child has "
+            android:textColor="@color/secmain"
+            android:textSize="15sp"
+            android:transitionName="text" />
+
+        <TextView
+            android:id="@+id/text22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="143dp"
+            android:layout_marginTop="81dp"
+            android:text=" mastered only. "
+            android:textColor="#5E5D5D"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:transitionName="text" />
+
+
+    </RelativeLayout>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,34 +67,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginTop="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
 
-        <ImageView
-            android:id="@+id/profile_icon"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="right"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/profil" />
-
-        <TextView
-            android:id="@+id/week1"
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="30dp"
-            android:text="Evaluate your child improvment to help us measure his/her progress"
-            android:textColor="@color/secmain"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:transitionName="text" />
-
-        <ScrollView
-            android:layout_height="300dp"
+          <ScrollView
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:layout_centerHorizontal ="true">
 
@@ -68,6 +85,7 @@
                 android:orientation="vertical"
                 android:paddingTop="30dp"
                 >
+
 
 
             </LinearLayout>

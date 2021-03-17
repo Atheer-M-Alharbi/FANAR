@@ -1,6 +1,8 @@
 package com.example.fanarver3;
 
-public interface OnBooleanChangeListener
+import java.sql.Date;
+
+public interface OnChangeListener
 {
     public void onBooleanChanged(boolean newValue);
 
