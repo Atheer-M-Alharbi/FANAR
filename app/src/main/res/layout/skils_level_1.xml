@@ -26,6 +26,88 @@
         app:title="Plan"
         app:titleTextColor="@color/white" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="70dp"
+        >
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="352dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="First Level: Please select the skills that your child don't have it"
+            android:textColor="@color/main"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <CheckBox
+            android:id="@+id/shapes_1"
+            android:layout_width="342dp"
+            android:layout_height="63dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Match shapes"
+            android:textSize="15dp"
+            android:hint="shapes_1"
+            android:textColorHighlight="@color/main"
+            />
+
+        <CheckBox
+            android:id="@+id/card_1"
+            android:hint="card_1"
+            android:layout_width="342dp"
+            android:layout_height="63dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Match the cards"
+            android:textSize="15dp"
+            android:textColorHighlight="@color/main"/>
+
+        <CheckBox
+            android:id="@+id/color_1"
+            android:hint="color_1"
+            android:layout_width="342dp"
+            android:layout_height="63dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="Learn the colors"
+            android:textSize="15dp"
+            android:textColorHighlight="@color/main"/>
+
+        <CheckBox
+            android:id="@+id/count_1"
+            android:hint="count_1"
+            android:layout_width="342dp"
+            android:layout_height="63dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHighlight="@color/main"
+            android:text="Learn the count"
+            android:textSize="15dp"
+            />
+
+
+
+
+        <android.widget.Button
+            android:id="@+id/Okay"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/costum_login_botton"
+            android:text="Okay"
+            android:textColor="@color/white"
+            android:transitionName="login_trans" />
+
+    </LinearLayout>
+
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/menu"
         android:layout_width="match_parent"
@@ -38,92 +120,5 @@
         android:elevation="1dp"
         />
 
-    <CheckBox
-        android:id="@+id/ex1"
-        android:layout_width="342dp"
-        android:layout_height="63dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginTop="134dp"
-        android:text="Match shapes"
-        android:textSize="15dp"
-        android:textColorHighlight="@color/main"
-        />
-
-    <CheckBox
-        android:id="@+id/ex2"
-        android:layout_width="342dp"
-        android:layout_height="63dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="213dp"
-        android:text="Complete the image"
-        android:textSize="15dp"
-        android:textColorHighlight="@color/main"/>
-
-    <CheckBox
-        android:id="@+id/ex3"
-        android:layout_width="342dp"
-        android:layout_height="63dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="302dp"
-        android:text="Learn the colors"
-        android:textSize="15dp"
-        android:textColorHighlight="@color/main"/>
-
-    <CheckBox
-        android:id="@+id/ex4"
-        android:layout_width="342dp"
-        android:layout_height="63dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="382dp"
-        android:textColorHighlight="@color/main"
-        android:text=" Learn the count"
-        android:textSize="15dp"
-        />
-
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="352dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="34dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="79dp"
-        android:text="First Level: Please select the skills that your child don't have it"
-        android:textColor="@color/main"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
-    <android.widget.Button
-        android:id="@+id/Okay"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="201dp"
-        android:layout_marginEnd="95dp"
-        android:background="@drawable/costum_login_botton"
-        android:text="Okay"
-        android:textColor="@color/white"
-        android:transitionName="login_trans" />
 
 </RelativeLayout>

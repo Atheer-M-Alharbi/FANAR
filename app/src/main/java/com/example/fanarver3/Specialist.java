@@ -1,5 +1,7 @@
 package com.example.fanarver3;
 
+import android.util.Log;
+
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.io.IOException;
@@ -22,28 +24,31 @@ public class Specialist extends Home {
     }
 
     public static void filllist(String id) {
+        PlanList = new ArrayList<>();
 
         // check if this parent has plan or not
-        String quiry = "SELECT planobj FROM ChildPlan WHERE SpecialistID  = "+ id + ";";  // <---('.')<---
-        ResultSet rs = Home.sqlConn(quiry);
+        String quiry = "SELECT planobj FROM ChildPlan WHERE SpecialistID  = '"+ id + "';";  // <---('.')<---
+
         try {
-            if (rs.next() != false) {
-                Plan.loadPlanFromdatabase(quiry, 0);
-            }
+             Plan.loadPlanFromdatabase(quiry, 0);
+            Log.d("debug8","the plan array "+  PlanList.size());
         } catch (SQLException | IOException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
+
+
     }
 
     public static void AssigSpTolist(int planid) {
 
-        ArrayList Specialist = null;
+        ArrayList Specialist = new ArrayList();
+
         String quiry = "Select SpecialistID from Specialist;";
 
         ResultSet rs = Home.sqlConn(quiry);
         try {
             while (rs.next())
-                Specialist.add(rs.getInt(0));
+                Specialist.add(rs.getString("SpecialistID"));
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -51,7 +56,7 @@ public class Specialist extends Home {
 
         int random = (int) (Math.random() * Specialist.size() +1);
         if(Specialist.size()>0) {
-            Home.sqlConn("UPDATE ChildPlan SET SpecialistID = "+Specialist.get(random)+"WHERE PlanID = "+planid+";");
+            Home.sqlConn("UPDATE ChildPlan SET SpecialistID = "+Specialist.get(random-1)+"WHERE PlanID = "+planid+";");
         }else{
 
         }
@@ -74,7 +79,6 @@ public class Specialist extends Home {
         result = rs.getString(1);
         return result;
     }
-
 
     @Override
     public void setPassword(String password,String userID) throws SQLException {

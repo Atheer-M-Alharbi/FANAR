@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FANARver3">
-        <activity android:name=".Early_comm_1"></activity>
+        <activity android:name=".change_Password"></activity>
+        <activity android:name=".Edit_Profile" />
+        <activity android:name=".view_subject" />
+        <activity android:name=".AddSubject" />
         <activity android:name=".TABMainPages.Parent_cummunity" />
         <activity android:name=".TABMainPages.Parent_chatBot" />
         <activity android:name=".TABMainPages.Parent_PlanResourse" />
@@ -39,5 +42,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -39,8 +39,8 @@ public class LogIn extends AppCompatActivity {
 
 
     //var's
-    private static String ip = "192.168.100.5";
-    private static String userName = "FANARLOG";
+    private static String ip = "192.168.1.21";
+    private static String userName = "FANAR";
     private static String Password = "qwer";
     private static String Port = "1433";
     private static String classes = "net.sourceforge.jtds.jdbc.Driver";
@@ -95,7 +95,7 @@ public class LogIn extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         try {
-            //DriverManager.setLoginTimeout(100);
+            DriverManager.setLoginTimeout(100);
             Class.forName(classes);
             CONNECTION = DriverManager.getConnection(url, userName, Password);
 
