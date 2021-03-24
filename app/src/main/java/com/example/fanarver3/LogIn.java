@@ -39,8 +39,8 @@ public class LogIn extends AppCompatActivity {
 
 
     //var's
-    private static String ip = "192.168.1.21";
-    private static String userName = "FANAR";
+    private static String ip = "192.168.100.5";
+    private static String userName = "FANARLOG";
     private static String Password = "qwer";
     private static String Port = "1433";
     private static String classes = "net.sourceforge.jtds.jdbc.Driver";
@@ -110,22 +110,21 @@ public class LogIn extends AppCompatActivity {
                     testview.append(resultSet.getString(3));
                     testview.append(resultSet.getString(4));
                     testview.append(resultSet.getString(5));
-
-
-
                 }*/
                 logInBOT.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         verifyUser();
                         if (isverify) {
-                            Intent intent = new Intent(LogIn.this, HomeScreen.class);
-                            intent.putExtra("user",Parent_user_ID);
-                            startActivity(intent);
-                        }else{
-                            Intent intent = new Intent(LogIn.this, SPhomeScreen.class);
-                            startActivity(intent);
-
+                            Intent intent;
+                            if(!Parent_user_ID.isEmpty()){
+                                intent = new Intent(LogIn.this, HomeScreen.class);
+                                intent.putExtra("userLog",Parent_user_ID);
+                                startActivity(intent);}
+                             if(!Specialist_user_ID.isEmpty()){
+                                 intent = new Intent(LogIn.this, SPhomeScreen.class);
+                                 intent.putExtra("userLog",Parent_user_ID);
+                                 startActivity(intent);}
                         }
                     }
                 });
@@ -135,10 +134,10 @@ public class LogIn extends AppCompatActivity {
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            testview.setText("ERROR");
+            testview.setText("ERROR1"+e.getMessage());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            testview.setText("ERROR");
+            testview.setText("ERROR2"+throwables.getMessage());
         }
 
 
@@ -152,18 +151,24 @@ public class LogIn extends AppCompatActivity {
                 String email = EMAIL.getText().toString();
                 String pass = PASSWORD.getText().toString();
                 // check both tables if the user is exist
-                String query = "SELECT ParentID FROM Parent WHERE Email ='" + email + "' AND Password ='" + pass +"';";
+                String parentQuery = "SELECT ParentID FROM Parent WHERE Email ='" + email + "' AND Password ='" + pass +"';";
                        // "UNION SELECT Email,Password,SpecialistID FROM Specialist" +
                         //" WHERE Email ='" + email + "' AND Password ='" + pass+"';";
+                String SpecialistQuery = "SELECT SpecialistID FROM Specialist WHERE Email ='" + email + "' AND Password ='" + pass +"';";
                 statement = CONNECTION.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
+                ResultSet parentResult = statement.executeQuery(parentQuery);
+                ResultSet SpecialistResult = statement.executeQuery(SpecialistQuery);
                 // if THE USE IS exist
-                if (resultSet.next()) {
+                if (parentResult.next()) {
                     // to save the id of the user
-                    Parent_user_ID = resultSet.getString("ParentID");
-                   // user.setText(resultSet.getInt("ParentID"));
+                    Parent_user_ID = parentResult.getString("ParentID");
                     isverify= true;
-                }else {
+                }
+                else if(SpecialistResult.next()) {
+                    Specialist_user_ID=SpecialistResult.getString("SpecialistID");
+                    isverify= true;
+                }
+                else{
                 // if it was invaled or dosen't have an accuont
                     testview.append("email or password are invalid");
                     isverify= false;

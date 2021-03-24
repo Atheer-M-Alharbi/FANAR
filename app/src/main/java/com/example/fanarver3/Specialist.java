@@ -6,14 +6,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class Specialist extends Home {
-    //get by query
-    //set to update in the DB
-    // COMMUINTY
-    // ASSIG SSHILST
+
+    ResultSet rs;
 
     // this must be saved in database ****
     public static ArrayList<Plan> PlanList;
 
+    public Specialist(){
+
+    }
 
     public Specialist(String userID, String password, String email, String userName) {
         super(userID, password, email, userName);
@@ -32,8 +33,6 @@ public class Specialist extends Home {
         } catch (SQLException | IOException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
-
-
     }
 
     public static void AssigSpTolist(int planid) {
@@ -56,86 +55,131 @@ public class Specialist extends Home {
         }else{
 
         }
-
-
 }
 
     @Override
-    public String getUserID(String email) {
-        String Q = "select ID from parent where";
-        return Q;
+    public String getUserID(String email) throws SQLException {
+        String result = null;
+        String q = "select ID from Specialist where email='" + email + "'";
+        rs = sqlConn(q);
+        result = rs.getString(1);
+        return result;
     }
 
     @Override
-    public String getPassword(String userID, String email) {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public void setPassword(String password) {
-
-    }
-
-    @Override
-    public int getCommuintyID(String userID, String email) {
-        return 0;
-    }
-
-    @Override
-    public int getCommuintyID() {
-        return 0;
-    }
-
-    @Override
-    public void setCommuintyID(int commuintyID) {
-
-    }
-
-    @Override
-    public String getEmail(String userID) {
-        return null;
-    }
-
-    @Override
-    public String getEmail() {
-        return null;
-    }
-
-    @Override
-    public void setEmail(String email) {
-
-    }
-
-    @Override
-    public String getUserName(String userID, String email) {
-        return null;
-    }
-
-    @Override
-    public String getUserName() {
-        return null;
-    }
-
-    @Override
-    public void setUserName(String userName) {
-
-    }
-
-    @Override
-    public String getUserType() {
-        return null;
+    public String getPassword(String userID) throws SQLException {
+        String result = null;
+        String q = "select Password from Specialist where  ID='"+userID+"'";
+        rs = sqlConn(q);
+        result = rs.getString(1);
+        return result;
     }
 
 
     @Override
-    public void joinToCommunity(int commuintyID) {
+    public void setPassword(String password,String userID) throws SQLException {
 
+        String q = "UPDATE Specialist SET Password ='"+password+"' where ID='"+userID+"'";
+        rs = sqlConn(q);
     }
 
+    @Override
+    public int getCommuintyID(String userID) throws SQLException {
+        int result = 0;
+        String q = "select CommunityID from Specialist where  ID='"+userID+"'";
+        rs = sqlConn(q);
+        result = rs.getInt(1);
+        return result;
+    }
+
+    @Override
+    public void setCommuintyID(int commuintyID,String userID) throws SQLException {
+        //insert the user to communitymember table
+        String q="Insert into communitymember values("+commuintyID+",null,"+userID+"')";
+        rs = sqlConn(q);
+        //set the community id in parent table
+        q = "UPDATE Specialist SET CommunityID ="+commuintyID+" where ID='"+userID+"'";
+        rs = sqlConn(q);
+        // get the total partspent in this Community
+        q = "SELECT count(*) FROM communitymember where CommunityID="+commuintyID+";";
+        rs = sqlConn(q);
+        int memberNum=rs.getInt(1)+1;
+        //increment the patispent number
+        q = "UPDATE Community SET NumberOfMembers ="+memberNum+"' where CommunityID="+commuintyID+";";
+        rs = sqlConn(q);
+    }
+
+    @Override
+    public void deleteCommuinty(String userID, int commuintyID) throws SQLException {
+        //delete the user to communitymember table
+        String q="delete from communitymember where ID='"+userID+"'";
+        rs = sqlConn(q);
+        //remove the community id in parent table
+        q = "UPDATE Specialist SET CommunityID ="+0+" where ID='"+userID+"'";
+        rs = sqlConn(q);
+        // get the total partspent in this Community
+        q = "SELECT count(*) FROM communitymember where CommunityID="+commuintyID+";";
+        rs = sqlConn(q);
+        int memberNum=rs.getInt(1)-1;
+        //decrement the patispent number
+        q = "UPDATE Community SET NumberOfMembers ="+memberNum+"' where CommunityID="+commuintyID+";";
+        rs = sqlConn(q);
+    }
+
+    @Override
+    public boolean isCommuintyMember(String userID) throws SQLException {
+        if(getCommuintyID(userID)==0)
+            return false;
+        else
+            return true;
+    }
+
+    @Override
+    public String getEmail(String userID) throws SQLException {
+        String result = null;
+        String q = "select email from Specialist where ID='"+userID+"'";
+        rs = sqlConn(q);
+        result = rs.getString(1);
+        return result;
+    }
+
+    @Override
+    public String setEmail(String email,String userID) throws SQLException {
+        String output=null;
+        int isemail = email.indexOf("@");
+        int isemail2 = email.indexOf(".com");
+        if ((isemail & isemail2) == 1) {
+            // check both tables if the user is exist
+            String parentQuery = "SELECT Email FROM Parent WHERE ID ='" + userID + "';";
+            String SpecialistQuery = "SELECT Email FROM Specialist WHERE ID ='" + userID + "';";
+            rs = sqlConn(parentQuery);
+            ResultSet rs2 = sqlConn(SpecialistQuery);
+            //check if exist
+            if (rs.next() || rs2.next()) {
+                output="this email " + email + "is already taken";
+            }else {
+                String q = "UPDATE Specialist SET email ='" + email + "' WHERE ID ='" + userID + "';";
+                rs = sqlConn(q);}
+            output="Your email has been updated successfully";
+        } else {
+            output="incorrect email, it should be like this example: example@example.com";
+        }
+        return output;
+    }
+
+    @Override
+    public String getUserName(String userID) throws SQLException {
+        String result = null;
+        String q = "select name from Specialist where email=" + "'" + email + "'OR ID='"+userID+"'";
+        rs = sqlConn(q);
+        result = rs.getString(1);
+        return result;
+    }
+
+    @Override
+    public void setUserName(String userName,String userID) {
+        String q = "UPDATE Specialist SET name ='"+userName+"' where email=" + "'" + email + "'OR ID='"+userID+"'";
+        rs = sqlConn(q);
+    }
 
 }

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public abstract class Home {
+
     protected String userID;
     // need to change
     protected String password;
@@ -16,6 +17,8 @@ public abstract class Home {
     protected String userName;
     private String userType;
 
+    public Home() {
+    }
 
     public Home(String userID, String password, String email, String userName) {
         this.userID = userID;
@@ -27,31 +30,27 @@ public abstract class Home {
 
     public abstract String getUserID(String email) throws SQLException;
 
-    public abstract String getPassword(String userID,String email);
+    public abstract String getPassword(String userID) throws SQLException;
 
-    public abstract String getPassword();
+    public abstract void setPassword(String password, String userID) throws SQLException;
 
-    public abstract void setPassword(String password);
+    public abstract int getCommuintyID(String userID) throws SQLException;
 
-    public abstract int getCommuintyID(String userID,String email);
+    public abstract void setCommuintyID(int commuintyID, String userID) throws SQLException;
 
-    public abstract int getCommuintyID();
+    public abstract void deleteCommuinty(String userID,int commuintyID) throws SQLException;
 
-    public abstract void setCommuintyID(int commuintyID);
+    public abstract boolean  isCommuintyMember(String userID) throws SQLException;
 
-    public abstract String getEmail(String userID);
+    public abstract String getEmail(String userID) throws SQLException;
 
-    public abstract String getEmail();
+    public abstract String setEmail(String email,String userID) throws SQLException;
 
-    public abstract void setEmail(String email);
+    public abstract String getUserName(String userID) throws SQLException;
 
-    public abstract String getUserName(String userID,String email);
+    public abstract void setUserName(String userName,String userID);
 
-    public abstract String getUserName();
-
-    public abstract void setUserName(String userName);
-
-    public  String getUserType(String userID){
+    public static   String getUserType(String userID){
         char t=userID.charAt(0);
         if (t==0)
             return "parent";
@@ -59,11 +58,6 @@ public abstract class Home {
             return "Specialist";
 
     }
-
-    public abstract String getUserType();
-
-    public abstract void joinToCommunity(int commuintyID);
-
 
     public static ResultSet sqlConn(String query) {
         String ip = "192.168.1.21";

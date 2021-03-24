@@ -12,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.fanarver3.SPscreen.SPhomeScreen;
 import com.google.android.material.textfield.TextInputLayout;
 import com.example.fanarver3.TABMainPages.HomeScreen;
 
@@ -28,7 +29,6 @@ public class SignUp extends AppCompatActivity {
     AutoCompleteTextView UserType;
     TextInputLayout EMAIL, PASSWORD,NAME,CONFIRM_PASSWORD;
     TextView  testview, newUser;
-    static int currUserID;
 
     //var's
     private static String ip ="192.168.43.13";
@@ -41,7 +41,12 @@ public class SignUp extends AppCompatActivity {
 
     private static Connection CONNECTION = null;
 
+     int numOfParent;
+     int numOfSpecialist;
+    int currUserID;
     boolean isCreate;
+    String Parent_user_ID;
+    String Specialist_user_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +85,19 @@ public class SignUp extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     createNewUser();
-                    Intent intent = new Intent(SignUp.this, HomeScreen.class );
-                    startActivity(intent);
+                    if (isCreate) {
+                        Intent intent = null;
+                        if(!Parent_user_ID.isEmpty()){
+                            intent = new Intent(SignUp.this, HomeScreen.class);
+                            intent.putExtra("userSIGN",Parent_user_ID);
+                            startActivity(intent);}
+                        if(!Specialist_user_ID.isEmpty()){
+                            intent = new Intent(SignUp.this, SPhomeScreen.class);
+                            intent.putExtra("userSIGN",Specialist_user_ID);
+                            startActivity(intent);}
+                    }
                 }
+
             });
 
         } catch (ClassNotFoundException | SQLException e) {
@@ -111,34 +126,43 @@ public class SignUp extends AppCompatActivity {
                     int isemail2 = email.indexOf(".com");
                     if ((isemail & isemail2) == 1) {
                         // check both tables if the user is exist
-                        String query = "SELECT Email,Password, ParentID FROM Parent" +
-                                "WHERE Email=" + email +
-                                "UNION" +
-                                "SELECT Email,Password,SpecialistID FROM Specialist" +
-                                "WHERE Email=" + email;
+                        String parentQuery = "SELECT ParentID FROM Parent WHERE Email ='" + email + "' AND Password ='" + pass +"';";
+                        // "UNION SELECT Email,Password,SpecialistID FROM Specialist" +
+                        //" WHERE Email ='" + email + "' AND Password ='" + pass+"';";
+                        String SpecialistQuery = "SELECT SpecialistID FROM Specialist WHERE Email ='" + email + "' AND Password ='" + pass +"';";
                         statement = CONNECTION.createStatement();
-                        ResultSet resultSet = statement.executeQuery(query);
+                        ResultSet parentResult = statement.executeQuery(parentQuery);
+                        ResultSet SpecialistResult = statement.executeQuery(SpecialistQuery);
                         //check if exist
-                        if (resultSet.next()) {
+                        if (parentResult.next()||SpecialistResult.next()) {
                             testview.setText("this email " + email + "is already exist, if it was yours please go to LogIn and choose forget password");
                         } else {
+
                             // check the pass
                             if (pass.equals(confirmPass)) {
                                 // ganeratr the ID and insert the object to DB
                                 if (type.equals("Parent")) {
+                                    numOfParent=parentResult.getRow();
+                                    numOfParent++;
                                     userID = "0" + currUserID;
                                     Home parent = new Parent(userID, pass, email, userName);
-                                    query = "INSERT INTO Parent (ParentID,ParentName ,Email,Password)" +
-                                            "VALUES ('" + userID + "', '" + userName + "' ,'" + email + "'," + pass + ");";
-                                    resultSet = statement.executeQuery(query);
-                                    currUserID++;
+                                    parentQuery = "INSERT INTO Parent (ParentID,ParentName ,Email,Password) " +
+                                            " VALUES ('" + userID + "', '" + userName + "' ,'" + email + "'," + pass + ");";
+                                    parentResult = statement.executeQuery(parentQuery);
+                                    Parent_user_ID = userID;
+                                    isCreate= true;
                                 } else if (type.equals("Specialist")) {
-                                    userID = "1" + currUserID;
+                                    //String q="SELECT COUNT(SpecialistID) FROM Specialist";
+                                    numOfSpecialist=SpecialistResult.getRow();
+                                    numOfSpecialist++;
+                                    userID = "1" + numOfSpecialist;
                                     Home specialist = new Specialist(userID, pass, email, userName);
-                                    query = "INSERT INTO Specialist (SpecialistID,SpecialistName ,Email,Password  )\n" +
-                                            "VALUES ('" + userID + "', '" + userName + "' ,'" + email + "'," + pass + ");";
-                                    resultSet = statement.executeQuery(query);
-                                    currUserID++;
+                                    SpecialistQuery = "INSERT INTO Specialist (SpecialistID,SpecialistName ,Email,Password  )\n" +
+                                            " VALUES ('" + userID + "', '" + userName + "' ,'" + email + "'," + pass + ");";
+                                    SpecialistResult = statement.executeQuery(SpecialistQuery);
+                                    Specialist_user_ID=userID;
+                                    isCreate= true;
+
                                 }
                             } else {
                                 testview.setText("the password and comfirm password do not match");
@@ -147,7 +171,7 @@ public class SignUp extends AppCompatActivity {
                     }
                     //check email
                     else {
-                        testview.setText("the email incorrect, it should be like this example: example@example.com");
+                        testview.setText("incorrect email, it should be like this example: example@example.com");
                     }
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();

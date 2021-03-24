@@ -37,23 +37,28 @@ public class HomeScreen extends AppCompatActivity {
 
     private void bottonMenu() {
 
-
-
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int i) {
                 Activity InWhichActivity = null;
+                Intent intent;
+                String user_ID = getIntent().getStringExtra("user");
                 switch(i){
                     case R.id.nav_plan:
-                        startActivity(new Intent(getApplicationContext(),parent_Plan.class));
+                        intent = new Intent(getApplicationContext(), parent_Plan.class);
+                        intent.putExtra("user",user_ID);
+                        startActivity(intent);
                         overridePendingTransition(0,0);
                         break;
                     case R.id.nav_com:
-                        startActivity(new Intent(getApplicationContext(),Parent_cummunity.class));
+                        intent = new Intent(getApplicationContext(), Parent_cummunity.class);
+                        intent.putExtra("user",user_ID);
                         overridePendingTransition(0,0);
                         break;
                     case R.id.nav_chatBot:
-                        startActivity(new Intent(getApplicationContext(),Parent_chatBot.class));
+                        intent = new Intent(getApplicationContext(), Parent_chatBot.class);
+                        intent.putExtra("user",user_ID);
+                        startActivity(intent);
                         overridePendingTransition(0,0);
                         break;
                 }
