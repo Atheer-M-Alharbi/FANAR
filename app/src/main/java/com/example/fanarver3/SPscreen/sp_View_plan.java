@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.StrictMode;
 import android.view.View;
 import android.view.WindowManager;
@@ -134,7 +135,7 @@ public class sp_View_plan extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(sp_View_plan.this, SP_ViewPlanContent_days.class);
-                intent.putExtra("plan", thisPlan); //  pass object to the next activity
+                intent.putExtra("plan", (Parcelable) thisPlan); //  pass object to the next activity
                 startActivity(intent);
             }
         });

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -83,7 +84,7 @@ public class EvaluatePlan extends AppCompatActivity {
                     }else{
                         // back to plancontent class & it will view the (not mastred) skill alone  bc we remove mastreded one above
                         Intent intent = new Intent(EvaluatePlan.this, Parent_PlanContent.class);
-                        intent.putExtra("plan",Plan);
+                        intent.putExtra("plan",(Parcelable) Plan);
                         startActivity(intent);
 
                     }
@@ -100,7 +101,7 @@ public class EvaluatePlan extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EvaluatePlan.this, Parent_PlanContent.class);
-                intent.putExtra("plan",Plan);
+                intent.putExtra("plan", (Parcelable) Plan);
                 startActivity(intent);
 
                 }

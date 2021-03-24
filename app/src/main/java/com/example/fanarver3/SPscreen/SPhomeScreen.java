@@ -2,42 +2,30 @@ package com.example.fanarver3.SPscreen;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.fanarver3.Home;
 import com.example.fanarver3.Plan;
 import com.example.fanarver3.Specialist;
 import com.example.fanarver3.R;
-import com.example.fanarver3.SPscreen.sp_View_plan;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
-
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class SPhomeScreen extends AppCompatActivity {
 
-    ChipNavigationBar chipNavigationBar;
-    Button viewPlan1;
-    Button viewPlan2;
-    Button viewPlan3;
+    ChipNavigationBar ChipNavigationBar1;
+    Button viewPlan1,viewPlan2,viewPlan3;
     TextView plan_id1, plan_id2, plan_id3;
 
-    LinearLayout LL1;
-    LinearLayout LL2 ;
-    LinearLayout LL3;
-    TextView userid;
+    LinearLayout LL1,LL2,LL3;
+    String Specialist_user_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +33,18 @@ public class SPhomeScreen extends AppCompatActivity {
         //hide state bar (the one show the sharge and time in phone
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-          LL1 = findViewById(R.id.layout1);
-          LL2 = findViewById(R.id.layout2);
-          LL3 = findViewById(R.id.layout3);
-          userid = findViewById(R.id.userID);
-
-        Specialist.filllist(userid.getText().toString());
+        LL1 = findViewById(R.id.layout1);
+        LL2 = findViewById(R.id.layout2);
+        LL3 = findViewById(R.id.layout3);
+        // the sp has no plan in the list
+        Specialist_user_ID = getIntent().getStringExtra("user");
+        Log.d("debug9","the user id  "+ Specialist_user_ID);
+        Specialist.filllist(Specialist_user_ID);
 
         // first check how many plan in the sp list
         switch (Specialist.PlanList.size()) {
             case 0:
-                // the sp has no plan in the list
-                LL1.setVisibility(View.GONE);
-                LL2.setVisibility(View.GONE);
-                LL3.setVisibility(View.GONE);
+                Log.d("debug8","plan array size= 0");
                 break;
             case 1:
                 case1();
@@ -76,8 +62,8 @@ public class SPhomeScreen extends AppCompatActivity {
         }
 
         // get menu id & make homescreen selected
-        chipNavigationBar = findViewById(R.id.sp_menu);
-        chipNavigationBar.setItemSelected(R.id.sp_nav_home, true);
+        ChipNavigationBar1 = findViewById(R.id.sp_menu);
+        ChipNavigationBar1.setItemSelected(R.id.sp_nav_home, true);
         bottonMenu();
 
 
@@ -86,7 +72,7 @@ public class SPhomeScreen extends AppCompatActivity {
 
     private void bottonMenu() {
 
-        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+        ChipNavigationBar1.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int i) {
 
@@ -123,7 +109,7 @@ public class SPhomeScreen extends AppCompatActivity {
                     throwables.printStackTrace();
                 }
                 Intent intent = new Intent(SPhomeScreen.this, sp_View_plan.class);
-                intent.putExtra("plan", plan);
+                intent.putExtra("plan", (Parcelable) plan);
                 startActivity(intent);
             }
         });
@@ -148,7 +134,7 @@ public class SPhomeScreen extends AppCompatActivity {
                     throwables.printStackTrace();
                 }
                 Intent intent = new Intent(SPhomeScreen.this, sp_View_plan.class);
-                intent.putExtra("plan", plan);
+                intent.putExtra("plan", (Parcelable) plan);
                 startActivity(intent);
             }
         });
@@ -167,7 +153,7 @@ public class SPhomeScreen extends AppCompatActivity {
                     throwables.printStackTrace();
                 }
                 Intent intent = new Intent(SPhomeScreen.this, sp_View_plan.class);
-                intent.putExtra("plan", plan);
+                intent.putExtra("plan", (Parcelable) plan);
                 startActivity(intent);
             }
         });
@@ -193,7 +179,7 @@ public class SPhomeScreen extends AppCompatActivity {
                     throwables.printStackTrace();
                 }
                 Intent intent = new Intent(SPhomeScreen.this, sp_View_plan.class);
-                intent.putExtra("plan", plan);
+                intent.putExtra("plan", (Parcelable) plan);
                 startActivity(intent);
             }
         });
@@ -212,7 +198,7 @@ public class SPhomeScreen extends AppCompatActivity {
                     throwables.printStackTrace();
                 }
                 Intent intent = new Intent(SPhomeScreen.this, sp_View_plan.class);
-                intent.putExtra("plan", plan);
+                intent.putExtra("plan", (Parcelable) plan);
                 startActivity(intent);
             }
         });
@@ -231,7 +217,7 @@ public class SPhomeScreen extends AppCompatActivity {
                     throwables.printStackTrace();
                 }
                 Intent intent = new Intent(SPhomeScreen.this, sp_View_plan.class);
-                intent.putExtra("plan", plan);
+                intent.putExtra("plan", (Parcelable) plan);
                 startActivity(intent);
             }
         });

@@ -4,6 +4,7 @@ package com.example.fanarver3;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
@@ -16,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -27,7 +29,7 @@ import java.util.ArrayList;
 
 import static com.example.fanarver3.Specialist.PlanList;
 
-public class Plan implements Parcelable {
+public class Plan implements Parcelable, Serializable {
 
     //  plan:
     //  1. view content & exercise in parent (done) & sp ( done )
@@ -69,6 +71,9 @@ public class Plan implements Parcelable {
         childID = childID + 1;
         PlanID = PlanID + 1;
         childName = child_Name;
+        ResourcesList = new ArrayList();
+        SelectedSkillsList = new ArrayList();
+
     }
 
 
@@ -95,22 +100,28 @@ public class Plan implements Parcelable {
         }
     };
 
-    public int GenerateDelvlopmentPlan(String AutsmLevelSelected, String AgeSelected, String IqLevelSelected, String PerceptionSelected) {
+    public int GenerateDelvlopmentPlan(String AutsmLevelSelected, String AgeSelected, String IqLevelSelected, String PerceptionSelected, String Parent_user_ID) {
 
         if (AutsmLevelSelected.equalsIgnoreCase("High function")) {
             AutsmLevel = 1;
+            this.setAutsmLevel(AutsmLevel);
         }
         IqLevel = Integer.parseInt(IqLevelSelected);
+        this.setIqLevel(IqLevel);
         age = Integer.parseInt(AgeSelected);
+        this.setAge(age);
         switch (PerceptionSelected) {
             case "Low":
                 Perception = 1;
+                this.setPerception(Perception);
                 break;
             case "medium":
                 Perception = 2;
+                this.setPerception(Perception);
                 break;
             case "High":
                 Perception = 3;
+                this.setPerception(Perception);
                 break;
         }
 
@@ -120,9 +131,9 @@ public class Plan implements Parcelable {
         PyObject obj = pyobject.callAttr("main", AutsmLevel, IqLevel, age, Perception);
 
         Planlevel = Integer.parseInt(obj.toString());
-
+        this.setPlanlevel(Planlevel);
         // save child info in database
-        insetINTOdatabase();
+        insetINTOdatabase(Parent_user_ID);
 
         return Integer.parseInt(obj.toString());
 
@@ -136,19 +147,17 @@ public class Plan implements Parcelable {
         ResultSet resultSet;
 
         // array contain the skills id  => SelectedSkillsList[0]
-        for (int i = 0; i <= SelectedSkills.size(); i++) {
-            // need modification
+        for (int i = 0; i < this.getSelectedSkillsList().size(); i++) {
             //while through the array & fetch each resourse id and save it into another array
-            resultSet_skills = Home.sqlConn("Select ExerciseID from Resources where Category  =" + SelectedSkillsList.get(i) + " AND PlanLevel  =" + this.Planlevel + ";");
+            resultSet_skills = Home.sqlConn("Select ExerciseID from Resources where Category  ='" + this.getSelectedSkillsList().get(i) + "' AND PlanLevel  ='" + this.getPlanlevel() + "';");
             while (resultSet_skills.next()) {
                 ResourcesList.add(resultSet_skills.getString("ExerciseID"));
             }
-        }
-
-        for (int i = 0; i <= ResourcesList.size(); i++) {
-            //while through the array & fetch each resourse id and save it into another array
-            resultSet = Home.sqlConn("INSERT INTO Exercise (Planid, ExersiseID, Category)" +
-                    "VALUES (" + this.getPlanID() + "," + ResourcesList.get(i) + "," + "," + SelectedSkillsList.get(i) + ";");
+            for (int x = 0; x < 4; x++) {
+                //while through the array & fetch each resourse id and save it into another array
+                resultSet = Home.sqlConn("INSERT INTO Exercise (Planid, Category, ExerciseID)" +
+                        " VALUES (" + this.getPlanID() + ",'" + SelectedSkillsList.get(i).toString() + "'," + ResourcesList.get(x).toString() + ");");
+            }
         }
 
         savePlanINTOdatabase(this);
@@ -156,83 +165,62 @@ public class Plan implements Parcelable {
 
 
     /// called from GenerateDelvlopmentPlan to save child info + need Parentid ***
-    public void insetINTOdatabase() {
+    public void insetINTOdatabase(String Parent_user_ID) {
 
-        ResultSet resultSet_skills = Home.sqlConn("INSERT INTO Child(ChildID,ChildName, autismLevel, ChildAge, IqLevel , Perception, ParentID )" +
-                "VALUES (" + childID + "," + childName + "," + AutsmLevel + "," + age + "," + IqLevel + "," + Perception);//+","+Parentid+");");
+        ResultSet resultSet_skills = Home.sqlConn("INSERT INTO Child (ChildID,ChildName, autismLevel, ChildAge, IqLevel , Perception, ParentID )" +
+                "VALUES ('" + this.getChildID() + "','" + this.getChildName() + "','" + this.getAutsmLevel() + "'," + this.getAge() + "," + this.getIqLevel() + ",'" + this.getPerception() + "','" + Parent_user_ID + "');");
 
     }
 
     // need it when sp change state...
     public void savePlanINTOdatabase(Plan plan) {
 
-        Connection con = Home.connection();
-        PreparedStatement ps;
-
-        try {
-            ps = con.prepareStatement("UPDATE ChildPlan SET planobj = ? WHERE PlanID = " + plan.getPlanID() + ";");
-            write(plan, ps);
-            ps.execute();
-            ps.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-    public static Plan loadPlanFromdatabase(String s, int choise) throws SQLException, IOException, ClassNotFoundException {
-
-        Connection con = Home.connection();
-        Statement st = con.createStatement();
-        ResultSet rs = st.executeQuery(s);
-        Plan PrentPLAN = null;
-        switch (choise) {
-            case 0:
-                while (rs.next()) {
-                    Object obj = read(rs, "planobj");
-                    Plan p = (Plan) obj;
-                    PlanList.add(p);
-                }
-                rs.close();
-                st.close();
-                break;
-            case 1:
-                // PARENT HAS ONLY ONE PLAN
-                Object obj = read(rs, "planobj");
-                PrentPLAN = (Plan) obj;
-                rs.close();
-                st.close();
-                break;
-        }
-        return PrentPLAN;
-    }
-
-    public static Object read(ResultSet rs, String column) throws SQLException,
-            IOException, ClassNotFoundException {
-        byte[] buf = rs.getBytes(column);
-        if (buf != null) {
-            ObjectInputStream objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
-            return objectIn.readObject();
-        }
-        return null;
-    }
-
-
-    public static void write(Object obj, PreparedStatement ps) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oout = new ObjectOutputStream(baos);
-            oout.writeObject(obj);
+            oout.writeObject(plan);
+            oout.flush();
             oout.close();
-            ps.setBytes(1, baos.toByteArray());
+            byte[] myObjBytes = baos.toByteArray();
+            Home.sqlConn("UPDATE ChildPlan SET planobj = " + myObjBytes.hashCode() + " WHERE PlanID = " + plan.getPlanID() + ";");
+            Log.d("debug7", "array second loop " + myObjBytes.hashCode());
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
 
     }
 
+    public static Plan loadPlanFromdatabase(String quiry, int choise) throws SQLException, IOException, ClassNotFoundException {
 
+        ResultSet rs = Home.sqlConn(quiry);
+        Plan PrentPLAN = null;
+        ObjectInputStream objectIn = null;
+        switch (choise) {
+            case 0:
+                while (rs.next()) {
+                    byte[] buf = rs.getBytes("planobj");
+                    if (buf != null) {
+                        objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+                        Object obj = objectIn.readObject();
+                        Plan p = (Plan) obj;
+                        PlanList.add(p);
+
+                    }
+                }
+                break;
+            case 1:
+                // PARENT HAS ONLY ONE PLAN
+                byte[] buf = rs.getBytes("planobj");
+                if (buf != null) {
+                      objectIn = new ObjectInputStream(new ByteArrayInputStream(buf));
+                    Object obj = objectIn.readObject();
+                    PrentPLAN = (Plan) obj;
+                }
+                break;
+        }
+        objectIn.close();
+        return PrentPLAN;
+    }
 
     @Override
     public int describeContents() {

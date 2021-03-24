@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -21,6 +23,7 @@ import com.example.fanarver3.OnChangeListener;
 import com.example.fanarver3.R;
 import com.example.fanarver3.Plan;
 import com.example.fanarver3.SPscreen.SPhomeScreen;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
@@ -36,15 +39,13 @@ import com.example.fanarver3.Specialist;
 
 public class parent_Plan extends AppCompatActivity {
 
+
     ChipNavigationBar chipNavigationBar;
     //var's => needed for educational skill
     android.widget.Button createPlan;
     ImageView UserProfile;
-    android.widget.AutoCompleteTextView AutismLevelSelected;
-    android.widget.AutoCompleteTextView ageSelected;
-    android.widget.AutoCompleteTextView IQLevelSelected;
-    android.widget.AutoCompleteTextView PerceptionSelected;
-    TextInputLayout child_Name;
+    android.widget.AutoCompleteTextView AutismLevelSelected,ageSelected,IQLevelSelected,PerceptionSelected;
+    TextInputEditText child_Name;
     Button okayBot;
     // to be able to reach it from evaluation plan class
     public static ArrayList selrctedSkills;
@@ -62,8 +63,9 @@ public class parent_Plan extends AppCompatActivity {
 
         Parent_user_ID = getIntent().getStringExtra("user");
 
+        selrctedSkills = new ArrayList();
         // check if this parent has plan or not
-        String quiry = "SELECT planobj FROM ChildPlan WHERE ParentID  =  "+ Parent_user_ID + ";";  // <---('.')<---
+        String quiry = "SELECT planobj FROM ChildPlan WHERE ParentID  =  '"+ Parent_user_ID + "';";  // <---('.')<---
         ResultSet rs = Home.sqlConn(quiry);
         try {
             if (rs.next() != false) {
@@ -73,7 +75,7 @@ public class parent_Plan extends AppCompatActivity {
                     setContentView(R.layout.wating_for_approval);
                 } else {
                     Intent intent = new Intent(parent_Plan.this, Parent_PlanContent.class);
-                    intent.putExtra("plan", plan);
+                    intent.putExtra("plan", (Parcelable) plan);
                     startActivity(intent);
                 }
             }
@@ -120,19 +122,20 @@ public class parent_Plan extends AppCompatActivity {
                 // ctrl + alt + L
 
                 // check child name is not empty!!!!!!!!!!!!!!!!!!!
-                if ((!child_Name.getEditText().toString().equals(" ")) && (!AutismLevelSelected.getText().toString().equals(" ")) && (!ageSelected.getText().toString().equals(" ")) && (!IQLevelSelected.getText().toString().equals(" ")) && (!PerceptionSelected.getText().toString().equals(" "))) {
+                if ((!child_Name.getText().toString().equals(" ")) && (!AutismLevelSelected.getText().toString().equals(" ")) && (!ageSelected.getText().toString().equals(" ")) && (!IQLevelSelected.getText().toString().equals(" ")) && (!PerceptionSelected.getText().toString().equals(" "))) {
                     //2. send required factor to the model
 
-                    Plan plan = new Plan(child_Name.getEditText().toString());
-                    int thePlanLevel = plan.GenerateDelvlopmentPlan(AutismLevelSelected.getText().toString(), ageSelected.getText().toString(), IQLevelSelected.getText().toString(), PerceptionSelected.getText().toString());
+                    Plan plan = new Plan(child_Name.getText().toString());
+                    int thePlanLevel = plan.GenerateDelvlopmentPlan(AutismLevelSelected.getText().toString(), ageSelected.getText().toString(), IQLevelSelected.getText().toString(), PerceptionSelected.getText().toString(), Parent_user_ID);
 
                     // create new object of Observableboolean to check on plan state
                     obsInt = new Observable();
+                    obsInt.set(false);
                     PlanLevel(thePlanLevel, plan);
 
                     // added new col ---> parent id + plan object
                     Home.sqlConn("INSERT INTO ChildPlan(PlanID, PlanLevel, Approve, planobj, SpecialistID, ChildID, ParentID)" +
-                            "VALUES (" + plan.getPlanID() + "," + thePlanLevel + ",0, NULL, NULL," + plan.childID+ "," + Parent_user_ID + ");");
+                            "VALUES (" + plan.getPlanID() + "," + thePlanLevel + ",0, NULL, NULL,'" + plan.childID+ "','" + Parent_user_ID + "');");
 
                 } else {
                     openDialog();
@@ -173,6 +176,7 @@ public class parent_Plan extends AppCompatActivity {
         okayBot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 getSelectedLevel(plan);
             }
         });
@@ -186,7 +190,7 @@ public class parent_Plan extends AppCompatActivity {
                     setContentView(R.layout.wating_for_approval);
                 } else {
                     Intent intent = new Intent(parent_Plan.this, Parent_PlanContent.class);
-                    intent.putExtra("plan", plan);
+                    intent.putExtra("plan",(Parcelable) plan);
                     startActivity(intent);
                 }
             }
@@ -217,29 +221,29 @@ public class parent_Plan extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     public void getSelectedLevel(Plan plan) {
 
-        CheckBox skill1 = findViewById(R.id.ex1);
-        CheckBox skill2 = findViewById(R.id.ex2);
-        CheckBox skill3 = findViewById(R.id.ex3);
-        CheckBox skill4 = findViewById(R.id.ex4);
+        CheckBox skill1 = findViewById(R.id.shapes_1);
+        CheckBox skill2 = findViewById(R.id.card_1);
+        CheckBox skill3 = findViewById(R.id.color_1);
+        CheckBox skill4 = findViewById(R.id.count_1);
 
 
-        if (skill1.isSelected()) {
-            selrctedSkills.add(skill1.getText().toString());
+        if (skill1.isChecked()) {
+            selrctedSkills.add(skill1.getHint().toString());
         }
-        if (skill2.isSelected()) {
-            selrctedSkills.add(skill2.getText().toString());
+        if (skill2.isChecked()) {
+            selrctedSkills.add(skill2.getHint().toString());
         }
-        if (skill3.isSelected()) {
-            selrctedSkills.add(skill3.getText().toString());
+        if (skill3.isChecked()) {
+            selrctedSkills.add(skill3.getHint().toString());
         }
-        if (skill4.isSelected()) {
-            selrctedSkills.add(skill4.getText().toString());
+        if (skill4.isChecked()) {
+            selrctedSkills.add(skill4.getHint().toString());
         }
-
 
         // setselrctedSkills for the plan
         try {
@@ -248,6 +252,7 @@ public class parent_Plan extends AppCompatActivity {
             throwables.printStackTrace();
         }
 
+        setContentView(R.layout.wating_for_approval);
         Specialist.AssigSpTolist(plan.getPlanID());
 
     }

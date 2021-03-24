@@ -95,7 +95,7 @@ public class LogIn extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         try {
-            //DriverManager.setLoginTimeout(100);
+            DriverManager.setLoginTimeout(100);
             Class.forName(classes);
             CONNECTION = DriverManager.getConnection(url, userName, Password);
 
@@ -119,9 +119,12 @@ public class LogIn extends AppCompatActivity {
                     public void onClick(View view) {
                         verifyUser();
                         if (isverify) {
-                            Intent intent = new Intent(LogIn.this, HomeScreen.class);
-                            intent.putExtra("user",Parent_user_ID);
+                            Intent intent = new Intent(LogIn.this, SPhomeScreen.class);
+                            intent.putExtra("user",Specialist_user_ID);
                             startActivity(intent);
+                           // Intent intent = new Intent(LogIn.this, HomeScreen.class);
+                            //intent.putExtra("user",Parent_user_ID);
+                            //startActivity(intent);
                         }else{
                             Intent intent = new Intent(LogIn.this, SPhomeScreen.class);
                             startActivity(intent);
@@ -135,10 +138,10 @@ public class LogIn extends AppCompatActivity {
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            testview.setText("ERROR");
+            testview.setText("ERROR1");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            testview.setText("ERROR");
+            testview.setText("ERROR2");
         }
 
 
@@ -152,15 +155,14 @@ public class LogIn extends AppCompatActivity {
                 String email = EMAIL.getText().toString();
                 String pass = PASSWORD.getText().toString();
                 // check both tables if the user is exist
-                String query = "SELECT ParentID FROM Parent WHERE Email ='" + email + "' AND Password ='" + pass +"';";
-                       // "UNION SELECT Email,Password,SpecialistID FROM Specialist" +
-                        //" WHERE Email ='" + email + "' AND Password ='" + pass+"';";
+                String query = "SELECT SpecialistID  FROM Specialist WHERE Email ='" + email + "' AND Password ='" + pass +"';";
+
                 statement = CONNECTION.createStatement();
                 ResultSet resultSet = statement.executeQuery(query);
                 // if THE USE IS exist
                 if (resultSet.next()) {
                     // to save the id of the user
-                    Parent_user_ID = resultSet.getString("ParentID");
+                    Specialist_user_ID = resultSet.getString("SpecialistID");
                    // user.setText(resultSet.getInt("ParentID"));
                     isverify= true;
                 }else {
