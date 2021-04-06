@@ -8,7 +8,8 @@
     android:orientation="vertical"
     android:background="@color/white"
     android:layout_gravity="center"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:layout_marginTop="10dp">
 
 
     <LinearLayout
@@ -22,20 +23,21 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="298dp"
-            android:layout_height="165dp"
-            android:transitionName="logo_image"
+            android:layout_width="244dp"
+            android:layout_height="136dp"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            app:srcCompat="@drawable/fan1_removebg_preview" />
+            android:layout_marginTop="30dp"
+            android:transitionName="logo_image"
+            app:srcCompat="@drawable/fan1_removebg_preview"/>
+
 
         <TextView
-            android:id="@+id/newUser"
+            android:id="@+id/test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:visibility="invisible"
-            tools:visibility="invisible" />
+            android:text=""
+            android:textColor="@color/design_default_color_error" />
 
         <TextView
             android:id="@+id/textView2"
@@ -49,17 +51,13 @@
             android:layout_marginTop="10dp"
             android:transitionName="text"
             />
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+
 
         // username
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/user_name"
             android:hint="Name"
             android:textColorHint="@color/main"
             app:boxStrokeColor="#BCBAB8"
@@ -67,10 +65,11 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                />
+                android:textColor="?android:attr/textColorPrimary" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,7 +77,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Email"
             android:hint="Email"
             android:textColorHint="@color/main"
             app:boxStrokeColor="#BCBAB8"
@@ -87,6 +85,7 @@
             android:transitionName="email_trans">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/Email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -98,7 +97,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/password"
+
             android:hint="Password"
             android:textColorHint="@color/main"
             app:boxStrokeColor="#BCBAB8"
@@ -108,6 +107,7 @@
             android:transitionName="password_trans">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -119,7 +119,6 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/confirmPassword"
             android:hint="confirm Password"
             android:textColorHint="@color/main"
             app:boxStrokeColor="#BCBAB8"
@@ -128,6 +127,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
@@ -135,31 +135,32 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        // dropdown menu for UserType
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/UserType"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Are you? Parent or Specialist"
-            android:textColorHint="@color/main"
-            android:textSize="15sp"
             app:boxStrokeColor="#BCBAB8"
-            app:hintTextColor="#D2FF9800">
+            app:hintTextColor="#D2FF9800"
+            android:id="@+id/radioGroup"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <AutoCompleteTextView
-                android:id="@+id/UserTypeSelected"
+            <RadioButton
+                android:id="@+id/radio_Parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:text="I'm Parent"
+            android:textColor="@color/main"
+            />
+
+            <RadioButton
+                android:id="@+id/radio_Specialist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="false"
-                android:inputType="none"
-                android:textColor="@color/black"
-                android:textSize="15sp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:text="I'm Specialist"
+                android:textColor="@color/main"
+                />
+        </RadioGroup>
 
-
-        <android.widget.Button
+    <android.widget.Button
             android:id="@+id/SignIN"
             android:layout_width="200dp"
             android:layout_gravity="center"

@@ -3,6 +3,7 @@
     package="com.example.fanarver3">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,10 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FANARver3">
-        <activity android:name=".change_Password"></activity>
+        <activity android:name=".AddSubject2"></activity>
+        <activity android:name=".change_Password" />
         <activity android:name=".Edit_Profile" />
+        <activity android:name=".Resources" />
         <activity android:name=".view_subject" />
-        <activity android:name=".AddSubject" />
+        <activity android:name=".SubjectList" />
         <activity android:name=".TABMainPages.Parent_cummunity" />
         <activity android:name=".TABMainPages.Parent_chatBot" />
         <activity android:name=".TABMainPages.Parent_PlanResourse" />
@@ -42,7 +45,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

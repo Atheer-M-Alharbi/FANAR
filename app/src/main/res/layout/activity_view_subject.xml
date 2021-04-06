@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +7,7 @@
     tools:context=".view_subject">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#E85A8A"
@@ -18,12 +17,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@color/white"
-        app:title="edit this using set from code"
         app:navigationIcon="@drawable/backarrow"
-        />
+        app:title="edit this using set from code"
+        app:titleTextColor="@color/white" />
 
     <TextView
+        android:id="@+id/titleVeiw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -48,148 +47,43 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="515dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/weeks_and_resourse_bottom"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="content/"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editTextTextMultiLine"
-                    android:layout_width="339dp"
-                    android:layout_height="200dp"
+                    android:id="@+id/subjectView"
+                    android:layout_width="325dp"
+                    android:layout_height="500dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
                     android:scrollbars="vertical"
-                    android:text="dhjg fjkrhel.ygi r;ojd/tor;vjw/;.fg jkkjetjk kj,hgke .ksu,hgjoswh tf i45i t 4uthihnfi4uhieltiuhiunylungilehiy" />
-
-
-
-
-
-
+                    android:text="reeeeeeeee"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"></TextView>
             </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="250dp"
-                android:layout_height="86dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_gravity="right"
-                android:background="@drawable/weeks_and_resourse_bottom"
-                android:orientation="vertical">
-
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="user name: ??"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/user_respon"
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine"
-                    android:scrollbars="vertical"
-                    android:text="dhjg  ngilehiy" />
-
-
-             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="250dp"
-                android:layout_height="86dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/weeks_and_resourse_bottom"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="user/sp:"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/user_respon_ans"
-                    android:layout_width="210dp"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine"
-                    android:scrollbars="vertical"
-                    android:text="dhjg  ngilehiy" />
-
-
-
-
-            </LinearLayout>
-
-
 
         </LinearLayout>
 
     </ScrollView>
 
-    <LinearLayout
+    <com.ismaeldivita.chipnavigation.ChipNavigationBar
+        android:id="@+id/menu"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:gravity="bottom"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/Info_Name"
-            android:layout_width="290dp"
-            android:layout_height="40dp"
-            android:background="@drawable/profile_text_view"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:scrollbars="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="5dp"
-            android:inputType="textMultiLine"/>
-
-        <android.widget.Button
-            android:id="@+id/logOut"
-            android:layout_width="90dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/costum_login_botton"
-            android:text="Send"
-            android:textColor="@color/white" />
-
-    </LinearLayout>
+        android:background="@drawable/menu_cornors"
+        android:elevation="1dp"
+        app:cnb_menuResource="@menu/nav_menu"
+        app:cnb_orientationMode="horizontal"
+        app:cnb_unselectedColor="#9E9898" />
 
 </RelativeLayout>

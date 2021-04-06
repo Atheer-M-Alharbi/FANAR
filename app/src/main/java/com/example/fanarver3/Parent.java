@@ -18,7 +18,7 @@ public class Parent extends Home{
     @Override
     public String getUserID(String email) throws SQLException {
         String result = null;
-        String q = "select ID from parent where email=" + "'" + email + "'";
+        String q = "select parentID from parent where email=" + "'" + email + "';";
         rs = sqlConn(q);
         result = rs.getString(1);
         return result;
@@ -27,61 +27,45 @@ public class Parent extends Home{
     @Override
     public String getPassword(String userID) throws SQLException {
         String result = null;
-        String q = "select Password from parent where ID='"+userID+"'";
+        String q = "select Password from parent where parentID='"+userID+"';";
         rs = sqlConn(q);
         result = rs.getString(1);
         return result;
     }
 
-
     @Override
     public void setPassword(String password,String userID) throws SQLException {
 
-            String q = "UPDATE parent SET Password ='"+password+"' where ID='"+userID+"'";
+            String q = "UPDATE parent SET Password ='"+password+"' where ParentID='"+userID+"';";
             rs = sqlConn(q);
     }
 
     @Override
     public int getCommuintyID(String userID) throws SQLException {
-        int result = 0;
-        String q = "select CommunityID from parent where ID='"+userID+"'";
+        int result =0;
+        System.out.println("userID **** parent class =" +userID);
+        String q = "select * from parent where parentID='"+userID+"';";
         rs = sqlConn(q);
-        result = rs.getInt(1);
+        rs.next();
+        result = rs.getInt("CommunityID");
+       // int commID=Integer.parseInt(result);
+        System.out.println("getCommuintyID : "+result);
+        //return commID;
         return result;
     }
 
 
     @Override
     public void setCommuintyID(int commuintyID,String userID) throws SQLException {
-        //insert the user to communitymember table
-        String q="Insert into communitymember values("+commuintyID+",null,'"+userID+"')";
-        rs = sqlConn(q);
         //set the community id in parent table
-         q = "UPDATE parent SET CommunityID ="+commuintyID+" where ID='"+userID+"'";
-        rs = sqlConn(q);
-        // get the total partspent in this Community
-        q = "SELECT count(*) FROM communitymember where CommunityID="+commuintyID+";";
-        rs = sqlConn(q);
-        int memberNum=rs.getInt(1)+1;
-        //increment the patispent number
-        q = "UPDATE Community SET NumberOfMembers ="+memberNum+"' where CommunityID="+commuintyID+";";
+        String q = "UPDATE parent SET CommunityID ="+commuintyID+" where parentID='"+userID+"';";
         rs = sqlConn(q);
     }
 
     @Override
     public void deleteCommuinty(String userID,int commuintyID) throws SQLException {
-        //delete the user to communitymember table
-        String q="delete from communitymember where ID='"+userID+"'";
-        rs = sqlConn(q);
         //remove the community id in parent table
-        q = "UPDATE parent SET CommunityID ="+0+" where ID='"+userID+"'";
-        rs = sqlConn(q);
-        // get the total partspent in this Community
-        q = "SELECT count(*) FROM communitymember where CommunityID="+commuintyID+";";
-        rs = sqlConn(q);
-        int memberNum=rs.getInt(1)-1;
-        //decrement the patispent number
-        q = "UPDATE Community SET NumberOfMembers ="+memberNum+"' where CommunityID="+commuintyID+";";
+        String q = "UPDATE parent SET CommunityID ="+null+" where parentID='"+userID+"';";
         rs = sqlConn(q);
     }
 
@@ -96,7 +80,7 @@ public class Parent extends Home{
     @Override
     public String getEmail(String userID) throws SQLException {
         String result = null;
-        String q = "select email from PARENT where ID='"+userID+"'";
+        String q = "select email from PARENT where PARENTID='"+userID+"';";
         rs = sqlConn(q);
         result = rs.getString(1);
         return result;
@@ -105,20 +89,20 @@ public class Parent extends Home{
 
     @Override
     public String setEmail(String email,String userID) throws SQLException {
+        email=email.toLowerCase();
         String output=null;
-        int isemail = email.indexOf("@");
-        int isemail2 = email.indexOf(".com");
-        if ((isemail & isemail2) == 1) {
+        int isemail = email.indexOf("@gmail.com");
+        if (isemail == 1) {
             // check both tables if the user is exist
-            String parentQuery = "SELECT Email FROM Parent WHERE ID ='" + userID + "';";
-            String SpecialistQuery = "SELECT Email FROM Specialist WHERE ID ='" + userID + "';";
+            String parentQuery = "SELECT Email FROM Parent WHERE ParentID ='" + userID + "';";
+            String SpecialistQuery = "SELECT Email FROM Specialist WHERE SpecialistID ='" + userID + "';";
             rs = sqlConn(parentQuery);
             ResultSet rs2 = sqlConn(SpecialistQuery);
             //check if exist
             if (rs.next() || rs2.next()) {
                 output="this email " + email + "is already taken";
             }else {
-            String q = "UPDATE parent SET email ='" + email + "' WHERE ID ='" + userID + "';";
+            String q = "UPDATE parent SET email ='" + email + "' WHERE ParentID ='" + userID + "';";
             rs = sqlConn(q);}
             output="Your email has been updated successfully";
         } else {
@@ -130,7 +114,7 @@ public class Parent extends Home{
     @Override
     public String getUserName(String userID) throws SQLException {
             String result = null;
-            String q = "select name from parent where email=" + "'" + email + "'OR ID='"+userID+"'";
+            String q = "select name from parent where ParentID='"+userID+"'";
             rs = sqlConn(q);
             result = rs.getString(1);
             return result;
@@ -138,11 +122,8 @@ public class Parent extends Home{
 
     @Override
     public void setUserName(String userName,String userID) {
-        String q = "UPDATE parent SET name ='"+userName+"' where email=" + "'" + email + "'OR ID='"+userID+"'";
+        String q = "UPDATE parent SET name ='"+userName+"' where ParentID='"+userID+"'";
         rs = sqlConn(q);
     }
-
-
-
 
 }

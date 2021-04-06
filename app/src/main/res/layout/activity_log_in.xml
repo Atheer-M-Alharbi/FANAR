@@ -29,18 +29,11 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/userID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:visibility="invisible"
-            tools:visibility="invisible" />
-
-        <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text=""
+            android:textColor="@color/design_default_color_error" />
 
 
         <TextView
@@ -98,7 +91,7 @@
 
         //delelt it??
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/Forget_password2"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right"

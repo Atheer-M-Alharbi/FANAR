@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
@@ -90,7 +91,6 @@ public class parent_Plan extends AppCompatActivity {
         chipNavigationBar.setItemSelected(R.id.nav_plan, true);
         bottonMenu();
 
-
         //userProfileOnClick
         UserProfile = findViewById(R.id.profile_icon);
         UserProfile.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +136,6 @@ public class parent_Plan extends AppCompatActivity {
                     // added new col ---> parent id + plan object
                     Home.sqlConn("INSERT INTO ChildPlan(PlanID, PlanLevel, Approve, planobj, SpecialistID, ChildID, ParentID)" +
                             "VALUES (" + plan.getPlanID() + "," + thePlanLevel + ",0, NULL, NULL,'" + plan.childID+ "','" + Parent_user_ID + "');");
-
                 } else {
                     openDialog();
                 }

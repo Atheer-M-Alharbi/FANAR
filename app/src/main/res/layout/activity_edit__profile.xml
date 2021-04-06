@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:hint="Email"
             android:textColorHint="@color/main"
-            android:transitionName="email_trans"
+
             app:boxStrokeColor="#BCBAB8"
             app:hintTextColor="#D2FF9800">
 
@@ -97,7 +97,6 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:textColorHint="@color/main"
-            android:transitionName="password_trans"
             app:boxStrokeColor="#BCBAB8"
             app:hintTextColor="#D2FF9800"
             app:passwordToggleEnabled="true">

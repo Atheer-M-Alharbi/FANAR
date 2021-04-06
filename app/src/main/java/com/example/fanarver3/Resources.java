@@ -2,6 +2,7 @@ package com.example.fanarver3;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,8 +16,6 @@ public class Resources extends AppCompatActivity {
         startActivity(openWebpage);
 
     }
-
-    ;
 
 }
 

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.sql.Statement;
 
 public abstract class Home {
@@ -50,9 +51,24 @@ public abstract class Home {
 
     public abstract void setUserName(String userName,String userID);
 
-    public static   String getUserType(String userID){
+    public static int rowCount(String tableName) throws SQLException {
+        String q="select * from "+tableName+" ;";
+        System.out.println(tableName);
+        ResultSet pResult= sqlConn(q);
+        int count = 0;
+        //int i = 0;
+        while (pResult.next()) {
+            count++;
+        }
+        return count;
+       // System.out.println("13 if 7 "+newUserID);
+
+    }
+
+    public static  String getUserType(String userID){
         char t=userID.charAt(0);
-        if (t==0)
+        System.out.println("userID = " + userID+t);
+        if (t=='0')
             return "parent";
         else
             return "Specialist";
@@ -60,12 +76,18 @@ public abstract class Home {
     }
 
     public static ResultSet sqlConn(String query) {
-        String ip = "192.168.1.21";
+        //REEM IP
+          String ip ="192.168.100.2";
+        //ATHEER IP
+        //  String ip = "192.168.1.21";
         String userName = "FANAR";
         String Password = "qwer";
         String Port = "1433";
         String classes = "net.sourceforge.jtds.jdbc.Driver";
-        String DataBase = "FANARDB";
+        //Reem
+        String DataBase="FANAR";
+        //Atheer
+        //String DataBase = "FANARDB";
         String url = "jdbc:jtds:sqlserver://" + ip + ":" + Port + "/" + DataBase;
         Connection CONNECTION = null;
         try {
@@ -91,14 +113,18 @@ public abstract class Home {
 
     public static Connection connection() {
 
-        String ip = "192.168.1.21";
-        String Port = "1433";
-
+        //REEM IP
+        String ip ="192.168.100.6";
+        //ATHEER IP
+        //  String ip = "192.168.1.21";
         String userName = "FANAR";
         String Password = "qwer";
-
+        String Port = "1433";
         String classes = "net.sourceforge.jtds.jdbc.Driver";
-        String DataBase = "FANARDB";
+        //Reem
+        String DataBase="FANAR";
+        //Atheer
+        //String DataBase = "FANARDB";
         String url = "jdbc:jtds:sqlserver://" + ip + ":" + Port + "/" + DataBase;
 
         Connection CONNECTION = null;

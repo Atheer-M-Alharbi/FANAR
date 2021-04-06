@@ -67,18 +67,19 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/ic_human_rights" />
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="13dp"
+                    android:src="@drawable/early_age" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_marginTop="33dp"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="17sp"
                     android:text="Early age community"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -90,13 +91,13 @@
 
                     <android.widget.Button
                         android:id="@+id/comunity1_Botton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="right"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/costum_login_botton"
-                        android:text="View"
+                        android:text="Join"
                         android:textColor="@color/white" />
 
                 </LinearLayout>
@@ -106,26 +107,28 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="86dp"
+                android:layout_height="88dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/weeks_and_resourse_bottom"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/ic_human_rights" />
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="13dp"
+                    android:src="@drawable/teenager" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
                     android:text="Teenage community"
+                    android:layout_marginTop="33dp"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="17sp"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -137,13 +140,13 @@
 
                     <android.widget.Button
                         android:id="@+id/comunity2_Botton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="right"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/costum_login_botton"
-                        android:text="View"
+                        android:text="Join"
                         android:textColor="@color/white" />
 
                 </LinearLayout>
@@ -162,18 +165,18 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/ic_human_rights" />
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="13dp"
+                    android:src="@drawable/genarel" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:text="General community"
+                    android:layout_marginTop="33dp"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="17sp"                    android:text="General community"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -185,13 +188,13 @@
 
                     <android.widget.Button
                         android:id="@+id/comunity3_Botton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="right"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/costum_login_botton"
-                        android:text="View"
+                        android:text="Join"
                         android:textColor="@color/white" />
 
                 </LinearLayout>

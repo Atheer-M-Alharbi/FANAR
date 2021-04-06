@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddSubject2">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarAddSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E85A8A"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white"
+        app:title="Add your subject :"
+
+        />
+
+
+    <TextView
+        android:id="@+id/messageAddSubject"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbarAddSubject"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="30dp"
+        android:text=""
+        android:textColor="@color/design_default_color_error" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="375dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/messageAddSubject"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Title of the subject"
+        app:boxStrokeColor="#BCBAB8"
+        android:background="@drawable/weeks_and_resourse_bottom"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/addTitle"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:layout_marginLeft="-12dp"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="375dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="160dp"
+        android:background="@drawable/weeks_and_resourse_bottom"
+        android:layout_marginLeft="20dp"
+
+        >
+
+        <EditText
+            android:id="@+id/subject"
+            android:layout_width="340dp"
+            android:layout_height="385dp"
+            android:background="@color/white"
+            android:gravity="top"
+            android:inputType="textMultiLine"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:scrollbars="vertical"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:scrollHorizontally="false"
+            android:hint="....Write your subject "
+            android:layout_below="@id/addTitle"
+            android:layout_marginTop="10dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="80dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <android.widget.Button
+            android:id="@+id/OkayAddSubject"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/costum_login_botton"
+            android:text="Okay"
+            android:textColor="@color/white" />
+
+        <android.widget.Button
+            android:id="@+id/cancelAddSubject"
+            android:layout_width="140dp"
+            android:layout_height="40dp"
+            android:background="@drawable/costum_login_botton"
+            android:text="Cancel"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

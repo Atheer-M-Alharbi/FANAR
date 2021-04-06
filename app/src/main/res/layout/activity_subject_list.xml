@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SubjectList">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarSubjectList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E85A8A"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@color/white"
+        app:title="edit this title from code using set"
+
+        />
+
+    <com.ismaeldivita.chipnavigation.ChipNavigationBar
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/menu_cornors"
+        app:cnb_menuResource="@menu/nav_menu"
+        app:cnb_orientationMode="horizontal"
+        app:cnb_unselectedColor="#9E9898"
+        android:elevation="1dp"
+        />
+
+    <TextView
+        android:id="@+id/messageSubjectList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="300dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/design_default_color_error" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/toolbarSubjectList"
+        android:gravity="center">
+
+
+        <android.widget.Button
+            android:id="@+id/Leave_cummunity"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/costum_login_botton"
+            android:text="Leave Cummunity"
+            android:textColor="@color/white" />
+
+        <android.widget.Button
+            android:id="@+id/add_subject"
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:drawableRight="@android:drawable/ic_menu_add"
+            android:background="@drawable/costum_login_botton"
+            android:text="Add Subject"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/menu"
+        android:layout_marginTop="361dp"
+        android:layout_marginBottom="337dp"
+        android:clipToPadding="false"
+        android:padding="4dp" />
+
+
+</RelativeLayout>
